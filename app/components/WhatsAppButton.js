@@ -1,5 +1,5 @@
 export default function WhatsAppButton() {
-  const phoneNumber = "905314202286"; // Your phone number in international format
+  const phoneNumber = "905332799080"; // Your phone number in international format
   const message = "Merhaba! Vize danışmanlık hizmetiniz hakkında bilgi almak istiyorum.";
   
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
