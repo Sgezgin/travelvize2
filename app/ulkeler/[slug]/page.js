@@ -1,174 +1,82 @@
+// app/ulkeler/[slug]/page.js
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import { Calendar, Clock, FileText, Euro, CheckCircle, Phone, ArrowLeft, Globe, Users, BadgeCheck } from 'lucide-react';
 import Link from 'next/link';
 
-// Ülke verilerini import edin (ayrı bir dosyada oluşturacağız)
-const countryData = {
-  'almanya-vizesi': {
-    name: 'Almanya',
-    flag: '🇩🇪',
-    title: 'Almanya Vizesi',
-    subtitle: 'Almanya Schengen Vizesi Başvurusu ve Detaylı Bilgiler',
-    image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
-    description: 'Almanya, Avrupa\'nın en gelişmiş ekonomilerinden birine sahip olan ve her yıl milyonlarca turisti ağırlayan önemli bir destinasyondur.',
-    visaType: 'Schengen Vizesi',
-    processingTime: '15-30 gün',
-    validityPeriod: '90 güne kadar',
-    entryType: 'Tek veya Çok Girişli',
-    sections: [
-      {
-        title: 'Gerekli Belgeler',
-        icon: '📄',
-        content: [
-          'Pasaport (en az 6 ay geçerli)',
-          'Vize başvuru formu (doldurulmuş ve imzalanmış)',
-          'Biyometrik fotoğraf (2 adet)',
-          'Seyahat sağlık sigortası (minimum 30.000 Euro)',
-          'Uçak bileti rezervasyonu',
-          'Otel rezervasyonu veya davetiye mektubu',
-          'Mali durum belgesi (banka hesap özeti)',
-          'İş yerinden izin belgesi veya öğrenci belgesi',
-        ]
-      },
-      {
-        title: 'Başvuru Süreci',
-        icon: '⚙️',
-        content: [
-          'Online randevu alın',
-          'Gerekli belgeleri hazırlayın',
-          'Vize başvuru merkezine gidin',
-          'Biyometrik verilerinizi verin',
-          'Başvuru ücretini ödeyin',
-          'Başvurunuzu takip edin',
-          'Pasaportunuzu teslim alın',
-        ]
-      },
-      {
-        title: 'Önemli Bilgiler',
-        icon: '⚠️',
-        content: [
-          'Schengen vizesi 26 Avrupa ülkesinde geçerlidir',
-          'Başvuru randevusu önceden alınmalıdır',
-          'Vize ücreti iade edilmez',
-          'Eksik evrak başvurunun reddine neden olabilir',
-          'Başvuru sonucu garanti edilemez',
-          'Ek belge istenmesi durumunda süre uzayabilir',
-        ]
-      }
-    ],
-    fees: {
-      adult: '80 EUR',
-      child: '40 EUR (6-12 yaş)',
-      service: 'Danışmanlık ücreti ayrıca hesaplanır'
-    },
-    faqs: [
-      {
-        question: 'Almanya vizesi kaç günde çıkar?',
-        answer: 'Normal şartlarda Almanya vizesi 15-30 gün içinde sonuçlanır. Ancak yoğun dönemlerde bu süre uzayabilir.'
-      },
-      {
-        question: 'Schengen vizesi hangi ülkelerde geçerlidir?',
-        answer: 'Schengen vizesi 26 Avrupa ülkesinde geçerlidir: Almanya, Fransa, İtalya, İspanya ve daha fazlası.'
-      },
-      {
-        question: 'Vize başvurusu için randevu almak zorunlu mu?',
-        answer: 'Evet, Almanya vize başvurusu için mutlaka önceden randevu almanız gerekmektedir.'
-      },
-      {
-        question: 'Vize ücreti ne kadar?',
-        answer: 'Yetişkinler için 80 EUR, 6-12 yaş arası çocuklar için 40 EUR vize ücreti bulunmaktadır.'
-      }
-    ]
-  },
-  // Diğer ülkeler için de benzer yapı eklenecek
-  'fransa-vizesi': {
-    name: 'Fransa',
-    flag: '🇫🇷',
-    title: 'Fransa Vizesi',
-    subtitle: 'Fransa Schengen Vizesi Başvurusu ve Detaylı Bilgiler',
-    image: 'https://images.unsplash.com/photo-1590767072824-a4424eca7038?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0',
-    // ... benzer içerik
-  },
-  // Tüm ülkeler için data eklenecek...
-};
+const countriesDirectory = path.join(process.cwd(), 'app/data/countries');
 
-// Tüm ülke slug'larını generate et
+function getCountryData(slug) {
+  try {
+    const fullPath = path.join(countriesDirectory, `${slug}.md`);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const { data, content } = matter(fileContents);
+    return { frontmatter: data, content: content, slug: slug };
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function generateStaticParams() {
-  return Object.keys(countryData).map((slug) => ({
-    slug: slug,
+  const files = fs.readdirSync(countriesDirectory);
+  return files.filter(file => file.endsWith('.md')).map(file => ({
+    slug: file.replace(/\.md$/, '')
   }));
 }
 
-// Metadata için
 export async function generateMetadata({ params }) {
-  const country = countryData[params.slug];
-  
-  if (!country) {
-    return {
-      title: 'Ülke Bulunamadı | TravelVize',
-    };
-  }
-
+  const countryData = getCountryData(params.slug);
+  if (!countryData) return { title: 'Ülke Bulunamadı' };
   return {
-    title: `${country.title} | TravelVize Danışmanlık`,
-    description: country.subtitle,
+    title: `${countryData.frontmatter.title} | TravelVize`,
+    description: `${countryData.frontmatter.country} vizesi başvuru süreci, gerekli belgeler ve detaylı bilgiler.`
   };
 }
 
-export default function CountryPage({ params }) {
-  const country = countryData[params.slug];
-  
-  if (!country) {
-    notFound();
-  }
+export default function CountryDetailPage({ params }) {
+  const countryData = getCountryData(params.slug);
+  if (!countryData) notFound();
+
+  const { frontmatter, content } = countryData;
+  const sections = parseMarkdownToSections(content);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      
       {/* Hero Section */}
-      <div className="relative h-[400px] overflow-hidden">
-        <Image
-          src={country.image}
-          alt={country.name}
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/80"></div>
-        <div className="absolute inset-0 flex items-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="flex items-center space-x-4 mb-4">
-              <span className="text-6xl">{country.flag}</span>
-              <div>
-                <h1 className="text-4xl lg:text-5xl font-bold text-white mb-2">
-                  {country.title}
-                </h1>
-                <p className="text-xl text-white/90">{country.subtitle}</p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-4 mt-6">
-              <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg text-white">
-                <span className="font-semibold">Vize Türü:</span> {country.visaType}
-              </div>
-              <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg text-white">
-                <span className="font-semibold">İşlem Süresi:</span> {country.processingTime}
-              </div>
-              <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg text-white">
-                <span className="font-semibold">Geçerlilik:</span> {country.validityPeriod}
+      <div className="relative bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          
+          <Link 
+            href="/ulkeler"
+            className="inline-flex items-center gap-2 text-blue-100 hover:text-white mb-6 transition-all hover:gap-3 group"
+          >
+            <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
+            <span className="font-medium">Tüm Ülkelere Dön</span>
+          </Link>
+          
+          <div className="flex items-start gap-6 mb-8">
+            <div className="text-7xl md:text-8xl drop-shadow-lg">{frontmatter.flag}</div>
+            <div className="flex-1">
+              <h1 className="text-4xl md:text-5xl font-bold mb-3 drop-shadow-md">
+                {frontmatter.title}
+              </h1>
+              <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                <Globe className="w-5 h-5" />
+                <span className="text-lg font-semibold">{frontmatter.visaType}</span>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Breadcrumb */}
-      <div className="bg-gray-50 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center space-x-2 text-sm">
-            <Link href="/" className="text-gray-600 hover:text-blue-600">Anasayfa</Link>
-            <span className="text-gray-400">/</span>
-            <Link href="/#hizmetler" className="text-gray-600 hover:text-blue-600">Ülkeler</Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-gray-900 font-medium">{country.name}</span>
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <StatCard icon={<Clock className="w-6 h-6" />} label="İşlem Süresi" value={frontmatter.processingTime} />
+            <StatCard icon={<Calendar className="w-6 h-6" />} label="Geçerlilik" value={frontmatter.validityPeriod} />
+            <StatCard icon={<FileText className="w-6 h-6" />} label="Giriş Türü" value={frontmatter.entryType} />
+            <StatCard icon={<Euro className="w-6 h-6" />} label="Ücret" value={frontmatter.fees?.adult || 'Değişken'} />
           </div>
         </div>
       </div>
@@ -176,178 +84,286 @@ export default function CountryPage({ params }) {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2">
-            {/* Description */}
-            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                {country.name} Vizesi Hakkında
-              </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                {country.description}
-              </p>
-            </div>
-
-            {/* Sections */}
-            {country.sections.map((section, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-lg p-8 mb-8">
-                <div className="flex items-center space-x-3 mb-6">
-                  <span className="text-4xl">{section.icon}</span>
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    {section.title}
-                  </h2>
-                </div>
-                <ul className="space-y-3">
-                  {section.content.map((item, idx) => (
-                    <li key={idx} className="flex items-start space-x-3">
-                      <svg className="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          
+          {/* Sol: İçerik */}
+          <div className="lg:col-span-2 space-y-6">
+            {sections.map((section, idx) => (
+              <ContentCard key={idx} section={section} />
             ))}
-
-            {/* FAQs */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Sıkça Sorulan Sorular
-              </h2>
-              <div className="space-y-4">
-                {country.faqs.map((faq, index) => (
-                  <div key={index} className="border-b border-gray-200 pb-4 last:border-0">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      {faq.question}
-                    </h3>
-                    <p className="text-gray-600">
-                      {faq.answer}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* Sidebar */}
+          {/* Sağ: Sidebar */}
           <div className="lg:col-span-1">
-            {/* CTA Card */}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl p-8 text-white mb-6 sticky top-6">
-              <h3 className="text-2xl font-bold mb-4">
-                Ücretsiz Danışmanlık
-              </h3>
-              <p className="mb-6 opacity-90">
-                Vize başvurunuz için profesyonel destek alın. Size özel çözümler sunuyoruz.
-              </p>
-              <Link 
-                href="/#iletisim"
-                className="block w-full bg-white text-blue-600 text-center py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 mb-4"
-              >
-                Hemen Başvur
-              </Link>
-              <a 
-                href="https://wa.me/905332799080"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-300"
-              >
-                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-                </svg>
-                WhatsApp ile İletişim
-              </a>
-            </div>
-
-            {/* Fees Card */}
-            <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
-                Vize Ücretleri
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b">
-                  <span className="text-gray-600">Yetişkin</span>
-                  <span className="font-semibold text-gray-900">{country.fees.adult}</span>
+            <div className="sticky top-8 space-y-6">
+              
+              {/* Başvuru Bilgileri */}
+              <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                    <CheckCircle className="w-6 h-6 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">Başvuru Bilgileri</h3>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b">
-                  <span className="text-gray-600">Çocuk (6-12 yaş)</span>
-                  <span className="font-semibold text-gray-900">{country.fees.child}</span>
-                </div>
-                <div className="pt-2">
-                  <p className="text-sm text-gray-500">{country.fees.service}</p>
+                <div className="space-y-4">
+                  <InfoRow label="Ülke" value={frontmatter.country} />
+                  <InfoRow label="Vize Türü" value={frontmatter.visaType} />
+                  <InfoRow label="İşlem Süresi" value={frontmatter.processingTime} />
+                  <InfoRow label="Geçerlilik" value={frontmatter.validityPeriod} />
+                  <InfoRow label="Giriş Türü" value={frontmatter.entryType} />
                 </div>
               </div>
-            </div>
 
-            {/* Quick Info Card */}
-            <div className="bg-blue-50 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
-                Hızlı Bilgi
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3">
-                  <svg className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <div>
-                    <p className="font-semibold text-gray-900">İşlem Süresi</p>
-                    <p className="text-sm text-gray-600">{country.processingTime}</p>
+              {/* Ücretler */}
+              {frontmatter.fees && (
+                <div className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl shadow-xl p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Euro className="w-8 h-8" />
+                    <h3 className="text-2xl font-bold">Vize Ücretleri</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <FeeRow label="Yetişkin" value={frontmatter.fees.adult} />
+                    <FeeRow label="Çocuk" value={frontmatter.fees.child} />
+                    <div className="pt-4 mt-4 border-t border-white/30">
+                      <p className="text-sm text-blue-100 leading-relaxed">
+                        {frontmatter.fees.service}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <svg className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <div>
-                    <p className="font-semibold text-gray-900">Geçerlilik Süresi</p>
-                    <p className="text-sm text-gray-600">{country.validityPeriod}</p>
-                  </div>
+              )}
+
+              {/* CTA */}
+              <div className="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-2xl shadow-xl p-6">
+                <div className="text-center mb-4">
+                  <Users className="w-12 h-12 mx-auto mb-3 opacity-90" />
+                  <h3 className="text-2xl font-bold mb-2">Hemen Başvurun</h3>
+                  <p className="text-green-100 text-sm">
+                    Uzman ekibimiz size yardımcı olmak için hazır!
+                  </p>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <svg className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                  <div>
-                    <p className="font-semibold text-gray-900">Giriş Türü</p>
-                    <p className="text-sm text-gray-600">{country.entryType}</p>
-                  </div>
-                </div>
+                <button className="w-full bg-white text-green-600 font-bold py-4 px-6 rounded-xl hover:bg-green-50 transition-all hover:scale-105 flex items-center justify-center gap-3 shadow-lg">
+                  <Phone className="w-5 h-5" />
+                  <span>Hemen İletişime Geçin</span>
+                </button>
               </div>
+
+              {/* Son Güncelleme */}
+              <div className="bg-gray-100 rounded-xl p-4 text-center border border-gray-200">
+                <p className="text-sm text-gray-600">
+                  <span className="block text-xs text-gray-500 mb-1">Son Güncelleme</span>
+                  <span className="font-bold text-gray-900">{new Date(frontmatter.lastUpdate).toLocaleDateString('tr-TR')}</span>
+                </p>
+              </div>
+
             </div>
           </div>
-        </div>
 
-        {/* Related Countries */}
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Diğer Popüler Ülkeler
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { name: 'Fransa', slug: 'fransa-vizesi', flag: '🇫🇷' },
-              { name: 'İtalya', slug: 'italya-vizesi', flag: '🇮🇹' },
-              { name: 'İspanya', slug: 'ispanya-vizesi', flag: '🇪🇸' },
-              { name: 'Hollanda', slug: 'hollanda-vizesi', flag: '🇳🇱' },
-            ].filter(c => c.slug !== params.slug).map((relatedCountry, index) => (
-              <Link
-                key={index}
-                href={`/ulkeler/${relatedCountry.slug}`}
-                className="group bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="text-center">
-                  <span className="text-5xl mb-3 block group-hover:scale-110 transition-transform duration-300">
-                    {relatedCountry.flag}
-                  </span>
-                  <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                    {relatedCountry.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 mt-1">Schengen Vizesi</p>
-                </div>
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
     </div>
   );
+}
+
+// Components
+function StatCard({ icon, label, value }) {
+  return (
+    <div className="bg-white/15 backdrop-blur-md rounded-xl p-4 border border-white/20 hover:bg-white/25 transition-all">
+      <div className="text-blue-100 mb-2">{icon}</div>
+      <p className="text-xs text-blue-100 mb-1 font-medium">{label}</p>
+      <p className="text-lg font-bold text-white">{value}</p>
+    </div>
+  );
+}
+
+function InfoRow({ label, value }) {
+  return (
+    <div className="flex justify-between items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+      <span className="text-sm text-gray-600 font-medium">{label}</span>
+      <span className="text-sm text-gray-900 font-bold text-right">{value}</span>
+    </div>
+  );
+}
+
+function FeeRow({ label, value }) {
+  return (
+    <div className="flex justify-between items-center bg-white/10 rounded-lg p-3">
+      <span className="text-white font-medium">{label}</span>
+      <span className="text-2xl font-bold text-white">{value}</span>
+    </div>
+  );
+}
+
+function ContentCard({ section }) {
+  // Eğer başlık yoksa (ilk paragraf gibi), basit kart göster
+  if (!section.title) {
+    return (
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow">
+        <div className="prose prose-lg max-w-none">
+          {renderContent(section.content)}
+        </div>
+      </div>
+    );
+  }
+
+  const HeadingTag = section.level === 2 ? 'h2' : section.level === 3 ? 'h3' : section.level === 4 ? 'h4' : 'h5';
+  const headingSize = section.level === 2 ? 'text-3xl' : section.level === 3 ? 'text-2xl' : section.level === 4 ? 'text-xl' : 'text-lg';
+  const barHeight = section.level === 2 ? 'h-10' : section.level === 3 ? 'h-8' : 'h-6';
+  
+  return (
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow">
+      <HeadingTag className={`font-bold text-gray-900 mb-6 pb-3 border-b-2 border-blue-100 flex items-center gap-3 ${headingSize}`}>
+        <span className={`w-1.5 ${barHeight} bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full flex-shrink-0`}></span>
+        <span>{section.title}</span>
+      </HeadingTag>
+      <div className="prose prose-lg max-w-none">
+        {renderContent(section.content)}
+      </div>
+    </div>
+  );
+}
+
+// Parsers
+function parseMarkdownToSections(markdown) {
+  const lines = markdown.split('\n');
+  const sections = [];
+  let currentSection = { title: '', content: [], level: 1 };
+
+  lines.forEach(line => {
+    // Tüm başlık seviyelerini yakala (# ile ###### arası)
+    const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
+    
+    if (headingMatch) {
+      // Önceki bölümü kaydet
+      if (currentSection.content.length > 0) {
+        sections.push({ ...currentSection });
+      }
+      
+      // Yeni bölüm - sadece ## ve üstünü göster (# ana başlığı atla)
+      const level = headingMatch[1].length;
+      if (level >= 2) {
+        currentSection = {
+          title: headingMatch[2].trim(),
+          content: [],
+          level: level
+        };
+      }
+    } else if (line.trim()) {
+      currentSection.content.push(line);
+    }
+  });
+
+  if (currentSection.content.length > 0) {
+    sections.push(currentSection);
+  }
+
+  // İlk boş başlığı filtrele
+  return sections.filter(s => s.title || s.content.length > 0);
+}
+
+function renderContent(lines) {
+  let html = [];
+  let inList = false;
+  let listItems = [];
+  let currentParagraph = '';
+
+  lines.forEach((line, idx) => {
+    const trimmed = line.trim();
+    
+    // Alt başlıklar (###, ####, #####)
+    const subHeadingMatch = trimmed.match(/^(#{3,5})\s+(.+)$/);
+    if (subHeadingMatch) {
+      // Önceki paragrafı bitir
+      if (currentParagraph) {
+        const formatted = currentParagraph.replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold text-gray-900">$1</strong>');
+        html.push(
+          <p key={`p-${idx}`} className="text-gray-700 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formatted }} />
+        );
+        currentParagraph = '';
+      }
+      
+      const level = subHeadingMatch[1].length;
+      const HeadingTag = level === 3 ? 'h3' : level === 4 ? 'h4' : 'h5';
+      const sizeClass = level === 3 ? 'text-xl' : level === 4 ? 'text-lg' : 'text-base';
+      
+      html.push(
+        <HeadingTag key={`h-${idx}`} className={`${sizeClass} font-bold text-gray-900 mt-8 mb-4 flex items-center gap-2`}>
+          <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
+          {subHeadingMatch[2].trim()}
+        </HeadingTag>
+      );
+      return;
+    }
+    
+    // Liste
+    if (trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
+      // Önceki paragrafı bitir
+      if (currentParagraph) {
+        const formatted = currentParagraph.replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold text-gray-900">$1</strong>');
+        html.push(
+          <p key={`p-${idx}`} className="text-gray-700 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formatted }} />
+        );
+        currentParagraph = '';
+      }
+      
+      inList = true;
+      const text = trimmed.replace(/^[-•]\s*/, '').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      listItems.push(text);
+    } else {
+      // Liste bitişi
+      if (inList) {
+        html.push(
+          <ul key={`list-${idx}`} className="space-y-3 my-6 ml-4">
+            {listItems.map((item, i) => (
+              <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed">
+                <span className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
+                <span dangerouslySetInnerHTML={{ __html: item }} />
+              </li>
+            ))}
+          </ul>
+        );
+        inList = false;
+        listItems = [];
+      }
+      
+      // Paragraf biriktir (boş satırda bitir)
+      if (trimmed) {
+        if (currentParagraph) {
+          currentParagraph += ' ' + trimmed;
+        } else {
+          currentParagraph = trimmed;
+        }
+      } else if (currentParagraph) {
+        // Boş satır - paragrafı bitir
+        const formatted = currentParagraph.replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold text-gray-900">$1</strong>');
+        html.push(
+          <p key={`p-${idx}`} className="text-gray-700 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formatted }} />
+        );
+        currentParagraph = '';
+      }
+    }
+  });
+
+  // Son liste
+  if (inList) {
+    html.push(
+      <ul key="list-final" className="space-y-3 my-6 ml-4">
+        {listItems.map((item, i) => (
+          <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed">
+            <span className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
+            <span dangerouslySetInnerHTML={{ __html: item }} />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  
+  // Son paragraf
+  if (currentParagraph) {
+    const formatted = currentParagraph.replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold text-gray-900">$1</strong>');
+    html.push(
+      <p key="p-final" className="text-gray-700 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formatted }} />
+    );
+  }
+
+  return html;
 }
