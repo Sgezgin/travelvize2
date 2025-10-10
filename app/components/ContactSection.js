@@ -148,7 +148,7 @@ export default function ContactSection() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-blue-100">Cumartesi:</span>
-                  <span className="font-semibold">10:00 - 17:00</span>
+                  <span className="font-semibold">10:00 - 15:00</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-blue-100">Pazar:</span>
@@ -166,7 +166,7 @@ export default function ContactSection() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
               </span>
-              Ücretsiz Danışmanlık Formu
+              SİZİ ARAYALIM
             </h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">

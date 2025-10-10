@@ -40,10 +40,10 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">İletişim</h4>
             <div className="space-y-2 text-gray-400">
-              <p>+90 533 279 90 80</p>
+              <p>0212 225 97 00</p>
               <p>info@travelvize.com</p>
-              <p>Halaskargazi Cad. No: 13/1 Canik Apt. Kat:1</p>
-              <p>Harbiye/Şişli/İstanbul</p>
+              <p>ERGENEKON MAH. HALASKARGAZİ CAD NO : 13/1 </p>
+              <p>Şişli/İstanbul</p>
             </div>
           </div>
         </div>
