@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 export default function ImageSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   
-  const slides = [
+  const slides = [ 
     {
       id: 1,
       image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&h=1080&fit=crop&crop=center",

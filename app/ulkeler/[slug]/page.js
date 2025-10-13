@@ -385,27 +385,31 @@ function ContentCard({ section }) {
   // Eğer başlık yoksa (ilk paragraf gibi), basit kart göster
   if (!section.title) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 hover:shadow-md transition-shadow">
-        <div className="prose prose-lg max-w-none">
-          {renderContent(section.content)}
+      <div className="modern-card">
+        <div className="modern-card-content">
+          <div className="prose prose-lg max-w-none">
+            {renderContent(section.content)}
+          </div>
         </div>
       </div>
     );
   }
 
   const HeadingTag = section.level === 2 ? 'h2' : section.level === 3 ? 'h3' : section.level === 4 ? 'h4' : 'h5';
-  const headingSize = section.level === 2 ? 'text-2xl' : section.level === 3 ? 'text-xl' : section.level === 4 ? 'text-lg' : 'text-base';
+  const headingSize = section.level === 2 ? 'text-2xl md:text-3xl' : section.level === 3 ? 'text-xl md:text-2xl' : section.level === 4 ? 'text-lg md:text-xl' : 'text-base md:text-lg';
   
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-      <div className="bg-gradient-to-r from-slate-50 to-blue-50 px-8 py-5 border-b border-gray-100">
+    <div className="modern-card">
+      <div className="modern-card-header">
         <HeadingTag className={`font-bold text-slate-900 flex items-center gap-3 ${headingSize}`}>
-          <span className="w-1.5 h-6 bg-blue-600 rounded-full flex-shrink-0"></span>
+          <span className="w-2 h-8 bg-blue-600 rounded-full flex-shrink-0"></span>
           <span>{section.title}</span>
         </HeadingTag>
       </div>
-      <div className="p-8">
-        {renderContent(section.content)}
+      <div className="modern-card-content">
+        <div className="prose prose-lg max-w-none">
+          {renderContent(section.content)}
+        </div>
       </div>
     </div>
   );
@@ -413,12 +417,23 @@ function ContentCard({ section }) {
 
 // Parsers
 function parseMarkdownToSections(markdown) {
-  const lines = markdown.split('\n');
+  // Remove frontmatter if present
+  let content = markdown;
+  if (content.startsWith('---')) {
+    const frontmatterEnd = content.indexOf('---', 3);
+    if (frontmatterEnd !== -1) {
+      content = content.substring(frontmatterEnd + 3).trim();
+    }
+  }
+  
+  const lines = content.split('\n');
   const sections = [];
   let currentSection = null;
 
-  lines.forEach(line => {
-    const headingMatch = line.match(/^(#{2,6})\s+(.+)$/);
+  lines.forEach((line, index) => {
+    // Remove carriage returns and trim
+    const cleanLine = line.replace(/\r$/, '').trim();
+    const headingMatch = cleanLine.match(/^(#{2,6})\s+(.+)$/);
     
     if (headingMatch) {
       // Save previous section if it exists
@@ -432,18 +447,37 @@ function parseMarkdownToSections(markdown) {
         content: [],
         level: level
       };
-    } else if (currentSection && line.trim()) {
+    } else if (currentSection && cleanLine) {
       // Add content to current section
-      currentSection.content.push(line);
-    } else if (currentSection && !line.trim() && currentSection.content.length > 0) {
+      currentSection.content.push(cleanLine);
+    } else if (currentSection && !cleanLine && currentSection.content.length > 0) {
       // Add empty line to preserve paragraph breaks
       currentSection.content.push('');
+    } else if (!currentSection && cleanLine) {
+      // Handle content before first heading
+      currentSection = {
+        title: null,
+        content: [cleanLine],
+        level: 2
+      };
+    } else if (!currentSection && !cleanLine && sections.length > 0 && sections[sections.length - 1].content.length > 0) {
+      // Add empty line to last section if it exists
+      sections[sections.length - 1].content.push('');
     }
   });
 
   // Don't forget the last section
   if (currentSection) {
     sections.push(currentSection);
+  }
+
+  // If no sections were found, create one with all content
+  if (sections.length === 0 && content.trim()) {
+    sections.push({
+      title: null,
+      content: lines.filter(line => line.trim() !== '').map(line => line.replace(/\r$/, '').trim()),
+      level: 2
+    });
   }
 
   return sections;
@@ -462,7 +496,7 @@ function renderContent(lines) {
       // Process bold text
       const formatted = currentParagraph.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-slate-900">$1</strong>');
       elements.push(
-        <p key={`p-${elements.length}`} className="text-gray-700 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formatted }} />
+        <p key={`p-${elements.length}`} className="text-gray-700 leading-relaxed mb-5 text-base md:text-lg corporate-gray" dangerouslySetInnerHTML={{ __html: formatted }} />
       );
       currentParagraph = '';
     }
@@ -471,10 +505,10 @@ function renderContent(lines) {
   const flushList = () => {
     if (inList && listItems.length > 0) {
       elements.push(
-        <ul key={`list-${elements.length}`} className="space-y-2.5 my-6 pl-1">
+        <ul key={`list-${elements.length}`} className="space-y-3 my-6 pl-0">
           {listItems.map((item, i) => (
-            <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed">
-              <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></span>
+            <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed text-base md:text-lg corporate-gray pl-6 relative">
+              <span className="w-2 h-2 bg-blue-600 rounded-full mt-2.5 flex-shrink-0 absolute left-0 top-2.5"></span>
               <span dangerouslySetInnerHTML={{ __html: item }} />
             </li>
           ))}
@@ -505,12 +539,12 @@ function renderContent(lines) {
       
       const level = subHeadingMatch[1].length;
       const HeadingTag = level === 3 ? 'h3' : level === 4 ? 'h4' : level === 5 ? 'h5' : 'h6';
-      const sizeClass = level === 3 ? 'text-lg' : level === 4 ? 'text-base' : 'text-sm';
+      const sizeClass = level === 3 ? 'text-xl md:text-2xl' : level === 4 ? 'text-lg md:text-xl' : 'text-base md:text-lg';
       
       elements.push(
-        <HeadingTag key={`h-${elements.length}`} className={`${sizeClass} font-bold text-slate-900 mt-8 mb-4 flex items-center gap-2.5`}>
-          <span className="w-1 h-5 bg-slate-400 rounded-full"></span>
-          {subHeadingMatch[2].trim()}
+        <HeadingTag key={`h-${elements.length}`} className={`${sizeClass} font-bold text-slate-900 mt-10 mb-5 flex items-center gap-3 corporate-dark`}>
+          <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></span>
+          <span>{subHeadingMatch[2].trim()}</span>
         </HeadingTag>
       );
       return;
@@ -523,7 +557,7 @@ function renderContent(lines) {
       
       inList = true;
       // Process bold text in list items
-      const text = trimmed.replace(/^[-•]\s*/, '').replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>');
+      const text = trimmed.replace(/^[-•]\s*/, '').replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-slate-900">$1</strong>');
       listItems.push(text);
     } else {
       // Regular paragraph text
