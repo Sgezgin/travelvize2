@@ -107,7 +107,7 @@ export default async function CountryDetailPage({ params }) {
                   alt="TravelVize Logo"
                   width={160}
                   height={45}
-                  className="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+                  className="h-54 w-auto transition-transform duration-300 group-hover:scale-105"
                   priority
                 />
               </div>
