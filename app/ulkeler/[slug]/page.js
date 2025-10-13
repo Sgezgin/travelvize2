@@ -86,6 +86,13 @@ export default async function CountryDetailPage({ params }) {
   // Get country image
   const countryImage = countryImages[slug] || frontmatter.image || "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
 
+  // Get all countries for sidebar
+  const allCountries = getAllCountries();
+  const relatedCountries = allCountries
+    .filter(country => country.slug !== slug)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 5);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Modern Navigation Header - Same as Homepage */}
@@ -145,7 +152,7 @@ export default async function CountryDetailPage({ params }) {
                 className="group relative bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 overflow-hidden"
               >
                 <span className="relative z-10 flex items-center space-x-2">
-                  <span>Ücretsiz Danışmanlık</span>
+                  <span>Sizi Arayalım</span>
                   <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -241,6 +248,48 @@ export default async function CountryDetailPage({ params }) {
             <div className="lg:col-span-1">
               <div className="sticky top-8 space-y-6">
                 
+                {/* Related Countries with Images */}
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4">
+                    <div className="flex items-center gap-3 text-white">
+                      <MapPin className="w-5 h-5" />
+                      <h3 className="text-lg font-semibold">Diğer Ülkeler</h3>
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-4">
+                    {relatedCountries.map((country) => (
+                      <Link 
+                        key={country.slug}
+                        href={`/ulkeler/${country.slug}`}
+                        className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition-all group border border-gray-100 hover:border-blue-200 hover:shadow-sm"
+                      >
+                        <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden relative">
+                          <Image
+                            src={country.image}
+                            alt={country.name}
+                            fill
+                            className="object-cover"
+                            sizes="64px"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                          <div className="absolute bottom-1 left-1 text-lg">
+                            {country.flag}
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-gray-900 group-hover:text-blue-600 truncate">
+                            {country.name}
+                          </h4>
+                          <p className="text-xs text-gray-500 truncate mt-1">{country.type}</p>
+                        </div>
+                        <svg className="w-4 h-4 text-gray-400 group-hover:text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Başvuru Bilgileri */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                   <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4">
@@ -355,7 +404,7 @@ function ContentCard({ section }) {
           <span>{section.title}</span>
         </HeadingTag>
       </div>
-      <div className="p-8 prose prose-lg max-w-none">
+      <div className="p-8">
         {renderContent(section.content)}
       </div>
     </div>
@@ -366,62 +415,100 @@ function ContentCard({ section }) {
 function parseMarkdownToSections(markdown) {
   const lines = markdown.split('\n');
   const sections = [];
-  let currentSection = { title: '', content: [], level: 1 };
+  let currentSection = null;
 
   lines.forEach(line => {
-    const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
+    const headingMatch = line.match(/^(#{2,6})\s+(.+)$/);
     
     if (headingMatch) {
-      if (currentSection.content.length > 0) {
-        sections.push({ ...currentSection });
+      // Save previous section if it exists
+      if (currentSection) {
+        sections.push(currentSection);
       }
       
       const level = headingMatch[1].length;
-      if (level >= 2) {
-        currentSection = {
-          title: headingMatch[2].trim(),
-          content: [],
-          level: level
-        };
-      }
-    } else if (line.trim()) {
+      currentSection = {
+        title: headingMatch[2].trim(),
+        content: [],
+        level: level
+      };
+    } else if (currentSection && line.trim()) {
+      // Add content to current section
       currentSection.content.push(line);
+    } else if (currentSection && !line.trim() && currentSection.content.length > 0) {
+      // Add empty line to preserve paragraph breaks
+      currentSection.content.push('');
     }
   });
 
-  if (currentSection.content.length > 0) {
+  // Don't forget the last section
+  if (currentSection) {
     sections.push(currentSection);
   }
 
-  return sections.filter(s => s.title || s.content.length > 0);
+  return sections;
 }
 
 function renderContent(lines) {
-  let html = [];
+  if (!lines || lines.length === 0) return null;
+  
+  let elements = [];
+  let currentParagraph = '';
   let inList = false;
   let listItems = [];
-  let currentParagraph = '';
+
+  const flushParagraph = () => {
+    if (currentParagraph) {
+      // Process bold text
+      const formatted = currentParagraph.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-slate-900">$1</strong>');
+      elements.push(
+        <p key={`p-${elements.length}`} className="text-gray-700 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formatted }} />
+      );
+      currentParagraph = '';
+    }
+  };
+
+  const flushList = () => {
+    if (inList && listItems.length > 0) {
+      elements.push(
+        <ul key={`list-${elements.length}`} className="space-y-2.5 my-6 pl-1">
+          {listItems.map((item, i) => (
+            <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed">
+              <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></span>
+              <span dangerouslySetInnerHTML={{ __html: item }} />
+            </li>
+          ))}
+        </ul>
+      );
+      listItems = [];
+    }
+    inList = false;
+  };
 
   lines.forEach((line, idx) => {
+    // Skip completely empty lines unless we need to break a paragraph
+    if (!line.trim()) {
+      if (currentParagraph) {
+        flushParagraph();
+      }
+      return;
+    }
+
     const trimmed = line.trim();
     
-    // Alt başlıklar (###, ####, #####)
-    const subHeadingMatch = trimmed.match(/^(#{3,5})\s+(.+)$/);
+    // Check for subheadings (###, ####, etc.)
+    const subHeadingMatch = trimmed.match(/^(#{3,6})\s+(.+)$/);
     if (subHeadingMatch) {
-      if (currentParagraph) {
-        const formatted = currentParagraph.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-slate-900">$1</strong>');
-        html.push(
-          <p key={`p-${idx}`} className="text-gray-700 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formatted }} />
-        );
-        currentParagraph = '';
-      }
+      // Flush any pending content before the heading
+      flushParagraph();
+      flushList();
       
       const level = subHeadingMatch[1].length;
-      const HeadingTag = level === 3 ? 'h3' : level === 4 ? 'h4' : 'h5';
+      const HeadingTag = level === 3 ? 'h3' : level === 4 ? 'h4' : level === 5 ? 'h5' : 'h6';
       const sizeClass = level === 3 ? 'text-lg' : level === 4 ? 'text-base' : 'text-sm';
       
-      html.push(
-        <HeadingTag key={`h-${idx}`} className={`${sizeClass} font-bold text-slate-900 mt-8 mb-4 flex items-center gap-2.5`}>
+      elements.push(
+        <HeadingTag key={`h-${elements.length}`} className={`${sizeClass} font-bold text-slate-900 mt-8 mb-4 flex items-center gap-2.5`}>
           <span className="w-1 h-5 bg-slate-400 rounded-full"></span>
           {subHeadingMatch[2].trim()}
         </HeadingTag>
@@ -429,70 +516,260 @@ function renderContent(lines) {
       return;
     }
     
-    // Liste
+    // Check for list items
     if (trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
-      if (currentParagraph) {
-        const formatted = currentParagraph.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold">$1</strong>');
-        html.push(
-          <p key={`p-${idx}`} className="text-gray-700 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formatted }} />
-        );
-        currentParagraph = '';
-      }
+      // Flush paragraph before starting a list
+      flushParagraph();
       
       inList = true;
-      const text = trimmed.replace(/^[-•]\s*/, '').replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold">$1</strong>');
+      // Process bold text in list items
+      const text = trimmed.replace(/^[-•]\s*/, '').replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>');
       listItems.push(text);
     } else {
+      // Regular paragraph text
+      // If we were in a list, flush it first
       if (inList) {
-        html.push(
-          <ul key={`list-${idx}`} className="space-y-2.5 my-6 pl-1">
-            {listItems.map((item, i) => (
-              <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed">
-                <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></span>
-                <span dangerouslySetInnerHTML={{ __html: item }} />
-              </li>
-            ))}
-          </ul>
-        );
-        inList = false;
-        listItems = [];
+        flushList();
       }
       
-      if (trimmed) {
-        if (currentParagraph) {
-          currentParagraph += ' ' + trimmed;
-        } else {
-          currentParagraph = trimmed;
-        }
-      } else if (currentParagraph) {
-        const formatted = currentParagraph.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-slate-900">$1</strong>');
-        html.push(
-          <p key={`p-${idx}`} className="text-gray-700 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formatted }} />
-        );
-        currentParagraph = '';
+      // Add to current paragraph (with space if needed)
+      if (currentParagraph) {
+        currentParagraph += ' ' + line.trim();
+      } else {
+        currentParagraph = line.trim();
       }
     }
   });
 
-  if (inList) {
-    html.push(
-      <ul key="list-final" className="space-y-2.5 my-6 pl-1">
-        {listItems.map((item, i) => (
-          <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed">
-            <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></span>
-            <span dangerouslySetInnerHTML={{ __html: item }} />
-          </li>
-        ))}
-      </ul>
-    );
-  }
-  
-  if (currentParagraph) {
-    const formatted = currentParagraph.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-slate-900">$1</strong>');
-    html.push(
-      <p key="p-final" className="text-gray-700 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: formatted }} />
-    );
-  }
+  // Flush any remaining content
+  flushParagraph();
+  flushList();
 
-  return html;
+  return elements;
+}
+
+// Add this function to get all countries
+function getAllCountries() {
+  return [
+    // Ana Popüler Ülkeler
+    { 
+      name: "Almanya", 
+      flag: "🇩🇪", 
+      type: "Schengen Vizesi", 
+      slug: "almanya-vizesi",
+      image: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Fransa", 
+      flag: "🇫🇷", 
+      type: "Schengen Vizesi", 
+      slug: "fransa-vizesi",
+      image: "https://images.unsplash.com/photo-1590767072824-a4424eca7038?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    { 
+      name: "Hollanda", 
+      flag: "🇳🇱", 
+      type: "Schengen Vizesi", 
+      slug: "hollanda-vizesi",
+      image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "İspanya", 
+      flag: "🇪🇸", 
+      type: "Schengen Vizesi", 
+      slug: "ispanya-vizesi",
+      image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "İtalya", 
+      flag: "🇮🇹", 
+      type: "Schengen Vizesi", 
+      slug: "italya-vizesi",
+      image: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Amerika", 
+      flag: "🇺🇸", 
+      type: "Turist Vizesi", 
+      slug: "amerika-vizesi",
+      image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "İngiltere", 
+      flag: "🇬🇧", 
+      type: "UK Vizesi", 
+      slug: "ingiltere-vizesi",
+      image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Kanada", 
+      flag: "🇨🇦", 
+      type: "eTA & Vize", 
+      slug: "kanada-vizesi",
+      image: "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    
+    // Yeni Eklenen Ülkeler
+    { 
+      name: "İsviçre", 
+      flag: "🇨🇭", 
+      type: "Schengen Vizesi", 
+      slug: "isvicre-vizesi",
+      image: "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Yunanistan", 
+      flag: "🇬🇷", 
+      type: "Schengen Vizesi", 
+      slug: "yunanistan-vizesi",
+      image: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Avusturya", 
+      flag: "🇦🇹", 
+      type: "Schengen Vizesi", 
+      slug: "avusturya-vizesi",
+      image: "https://images.unsplash.com/photo-1516550893923-42d28e5677af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Belçika", 
+      flag: "🇧🇪", 
+      type: "Schengen Vizesi", 
+      slug: "belcika-vizesi",
+      image: "https://images.unsplash.com/photo-1559564484-e48bf8aeeca1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Portekiz", 
+      flag: "🇵🇹", 
+      type: "Schengen Vizesi", 
+      slug: "portekiz-vizesi",
+      image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Danimarka", 
+      flag: "🇩🇰", 
+      type: "Schengen Vizesi", 
+      slug: "danimarka-vizesi",
+      image: "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Norveç", 
+      flag: "🇳🇴", 
+      type: "Schengen Vizesi", 
+      slug: "norvec-vizesi",
+      image: "https://images.unsplash.com/photo-1601439678777-b2b3c56fa627?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "İsveç", 
+      flag: "🇸🇪", 
+      type: "Schengen Vizesi", 
+      slug: "isvec-vizesi",
+      image: "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Finlandiya", 
+      flag: "🇫🇮", 
+      type: "Schengen Vizesi", 
+      slug: "finlandiya-vizesi",
+      image: "https://images.unsplash.com/photo-1517721071472-e2d29e33adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Polonya", 
+      flag: "🇵🇱", 
+      type: "Schengen Vizesi", 
+      slug: "polonya-vizesi",
+      image: "https://images.unsplash.com/photo-1559628376-f3fe5f782a2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Çek Cumhuriyeti", 
+      flag: "🇨🇿", 
+      type: "Schengen Vizesi", 
+      slug: "cek-cumhuriyeti-vizesi",
+      image: "https://images.unsplash.com/photo-1541849546-216549ae216d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Macaristan", 
+      flag: "🇭🇺", 
+      type: "Schengen Vizesi", 
+      slug: "macaristan-vizesi",
+      image: "https://images.unsplash.com/photo-1534239697798-120952767c38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Romanya", 
+      flag: "🇷🇴", 
+      type: "Schengen Vizesi", 
+      slug: "romanya-vizesi",
+      image: "https://images.unsplash.com/photo-1557958114-7888ea8058fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Bulgaristan", 
+      flag: "🇧🇬", 
+      type: "Schengen Vizesi", 
+      slug: "bulgaristan-vizesi",
+      image: "https://images.unsplash.com/photo-1565008576549-57569a49371d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Hırvatistan", 
+      flag: "🇭🇷", 
+      type: "Schengen Vizesi", 
+      slug: "hirvatistan-vizesi",
+      image: "https://images.unsplash.com/photo-1555990538-c3c6c7e0b499?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Slovenya", 
+      flag: "🇸🇮", 
+      type: "Schengen Vizesi", 
+      slug: "slovenya-vizesi",
+      image: "https://images.unsplash.com/photo-1531218150217-54595bc2b934?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Slovakya", 
+      flag: "🇸🇰", 
+      type: "Schengen Vizesi", 
+      slug: "slovakya-vizesi",
+      image: "https://images.unsplash.com/photo-1581193459975-4e8b970e2e42?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Litvanya", 
+      flag: "🇱🇹", 
+      type: "Schengen Vizesi", 
+      slug: "litvanya-vizesi",
+      image: "https://images.unsplash.com/photo-1596352914160-2b28f27b2de9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Letonya", 
+      flag: "🇱🇻", 
+      type: "Schengen Vizesi", 
+      slug: "letonya-vizesi",
+      image: "https://images.unsplash.com/photo-1580991735757-b8c7c8e5cd5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Estonya", 
+      flag: "🇪🇪", 
+      type: "Schengen Vizesi", 
+      slug: "estonya-vizesi",
+      image: "https://images.unsplash.com/photo-1526495124232-a04e1849168c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Malta", 
+      flag: "🇲🇹", 
+      type: "Schengen Vizesi", 
+      slug: "malta-vizesi",
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Lüksemburg", 
+      flag: "🇱🇺", 
+      type: "Schengen Vizesi", 
+      slug: "luksemburg-vizesi",
+      image: "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    { 
+      name: "Lihtenştayn", 
+      flag: "🇱🇮", 
+      type: "Schengen Vizesi", 
+      slug: "lihtenstayn-vizesi",
+      image: "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+  ];
 }

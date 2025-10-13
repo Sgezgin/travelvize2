@@ -364,7 +364,7 @@ export default function CountriesPage() {
                 className="group relative bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 overflow-hidden"
               >
                 <span className="relative z-10 flex items-center space-x-2">
-                  <span>Ücretsiz Danışmanlık</span>
+                  <span>Sizi Arayalım</span>
                   <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -522,7 +522,7 @@ export default function CountriesPage() {
               href="/#iletisim"
               className="inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition-colors duration-300 shadow-lg"
             >
-              Ücretsiz Danışmanlık Alın
+             Sizi Arayalım
             </Link>
           </div>
         </div>

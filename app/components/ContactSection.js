@@ -68,7 +68,7 @@ Yurt dışı planlarınıza birlikte yön verelim, vize işlemleri ve seyahat i�
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-2 text-lg">Ofis Adresimiz</h4>
                       <p className="text-gray-600 leading-relaxed">
-                        Halaskargazi Cad. No: 13/1<br/>
+                        Ergenekon Mah. Halaskargazi Cad. No: 13/1<br/>
                         Canik Apt. Kat:1<br/>
                         Harbiye/Şişli/İstanbul
                       </p>
