@@ -28,10 +28,10 @@ export default function MobileNavigation() {
   }, [isOpen]);
 
   const menuItems = [
-    { href: '#anasayfa', label: 'Anasayfa', icon: '🏠', description: 'Ana sayfa' },
-    { href: '#hizmetler', label: 'Hizmetler', icon: '✈️', description: 'Vize hizmetlerimiz' },
-    { href: '#hakkimizda', label: 'Hakkımızda', icon: '👥', description: 'Firmamız hakkında' },
-    { href: '#iletisim', label: 'İletişim', icon: '📞', description: 'İletişim bilgileri' }
+    { href: '/', label: 'Anasayfa', description: 'Ana sayfa' },
+    { href: '/#hizmetler', label: 'Hizmetler', description: 'Vize hizmetlerimiz' },
+    { href: '/#hakkimizda', label: 'Hakkımızda', description: 'Firmamız hakkında' },
+    { href: '/#iletisim', label: 'İletişim', description: 'İletişim bilgileri' }
   ];
 
   return (
@@ -84,11 +84,11 @@ export default function MobileNavigation() {
             <div className="flex justify-between items-center">
               <div className="group">
                 <Image
-                  src="https://www.travelvize.com/wp-content/uploads/2022/08/LOGOV3.png"
+                  src="/travel.png"
                   alt="TravelVize Logo"
-                  width={140}
+                  width={50}
                   height={38}
-                  className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+                  className="h-50 w-auto transition-transform duration-300 group-hover:scale-105"
                   priority
                 />
               </div>
@@ -119,9 +119,6 @@ export default function MobileNavigation() {
                 onClick={() => setIsOpen(false)}
               >
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl flex items-center justify-center group-hover:from-blue-100 group-hover:to-indigo-100 transition-all duration-300 group-hover:scale-110">
-                    <span className="text-xl">{item.icon}</span>
-                  </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                       {item.label}

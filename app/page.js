@@ -18,33 +18,30 @@ export default function Home() {
             <div className="flex-shrink-0 group">
               <div className="relative overflow-hidden rounded-xl">
                 <Image
-                  src="https://www.travelvize.com/wp-content/uploads/2022/08/LOGOV3.png"
+                  src="/travel.png"
                   alt="TravelVize Logo"
                   width={160}
                   height={45}
-                  className="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+                  className="h-54 w-auto transition-transform duration-300 group-hover:scale-105"
                   priority
                 />
               </div>
             </div>
             
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - Without Icons */}
             <nav className="hidden md:flex items-center space-x-1">
               {[
-                { href: '#anasayfa', label: 'Anasayfa', icon: '🏠' },
-                { href: '#hizmetler', label: 'Hizmetler', icon: '✈️' },
-                { href: '#hakkimizda', label: 'Hakkımızda', icon: '👥' },
-                { href: '#iletisim', label: 'İletişim', icon: '📞' }
+                { href: '#anasayfa', label: 'Anasayfa' },
+                { href: '#hizmetler', label: 'Hizmetler' },
+                { href: '#hakkimizda', label: 'Hakkımızda' },
+                { href: '#iletisim', label: 'İletişim' }
               ].map((item, index) => (
                 <a 
                   key={item.href}
                   href={item.href} 
                   className="group relative px-4 py-2 rounded-xl text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 hover:bg-blue-50/50"
                 >
-                  <span className="flex items-center space-x-2">
-                    <span className="text-sm group-hover:scale-110 transition-transform duration-300">{item.icon}</span>
-                    <span>{item.label}</span>
-                  </span>
+                  <span className="text-sm group-hover:scale-110 transition-transform duration-300">{item.label}</span>
                   <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
                 </a>
               ))}

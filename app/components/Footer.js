@@ -7,15 +7,15 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <Image
-              src="https://www.travelvize.com/wp-content/uploads/2021/12/logo-white-for-footer-1.png"
+              src="/travel.png"
               alt="TravelVize Logo"
               width={150}
               height={40}
-              className="h-10 w-auto mb-4 filter brightness-0 invert"
+              className="h-54 w-auto mb-4 filter brightness-0 invert"
             />
-            <p className="text-gray-400 mb-4">
+            {/* <p className="text-gray-400 mb-4">
               Profesyonel vize danışmanlık hizmetleri ile dünya kaplarına ulaşın.
-            </p>
+            </p> */}
           </div>
           
           <div>

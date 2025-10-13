@@ -34,16 +34,12 @@ export default function ContactSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 bg-blue-100 rounded-full mb-6">
-            <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
-            <span className="text-blue-600 text-sm font-medium">7/24 Destek</span>
-          </div>
+    
           <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-6">
             Bize Ulaşın
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Vize başvurunuz için ücretsiz danışmanlık alabilir, uzman ekibimizle doğrudan iletişime geçebilirsiniz
-          </p>
+Yurt dışı planlarınıza birlikte yön verelim, vize işlemleri ve seyahat için hemen bize ulaşın!          </p>
         </div>
         
         <div className="grid lg:grid-cols-2 gap-16">
@@ -250,7 +246,7 @@ export default function ContactSection() {
                 <svg className="w-5 h-5 mr-2 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
-                Ücretsiz Danışmanlık Talebini Gönder
+                Sizi Arayalım
               </button>
               
               <p className="text-sm text-gray-500 text-center">
