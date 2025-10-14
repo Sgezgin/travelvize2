@@ -398,8 +398,3 @@ Dosyanız için gerekli hazırlıklar yapılırken, pasaportunuz tarafımızdan 
 ##### Fransa aile birleşimi vizesi için ne yapmalıyım?
 
 Fransa aile birleşimi vizesi detaylı olarak görüşülmelidir. Her aile birleşimi adayına göre dosyasının hazırlanıp konsolosluktan randevu talep edilmesi gerekmektedir. Fransa Hükümeti tarafından kabul görmüş belgeler üzerine Fransa konsolosluğu tarafından işleme alınmaktadır. Öncesinde hazırlanması gereken hususi belgeler ve detaylar için bize ulaşabilirsiniz.
-
----
-
-*Kaynak: fransa-vizesi*
-*Son Güncelleme: 10.10.2025*

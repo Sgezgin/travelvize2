@@ -1,4 +1,3 @@
-// app/ulkeler/[slug]/page.js
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -9,6 +8,7 @@ import Image from "next/image";
 import MobileNavigation from '../../components/MobileNavigation';
 import Footer from '../../components/Footer';
 import WhatsAppButton from '../../components/WhatsAppButton';
+import ActiveTableOfContents from '../../components/ActiveTableOfContents';
 
 // Country images data
 const countryImages = {
@@ -222,7 +222,7 @@ export default async function CountryDetailPage({ params }) {
         </div>
 
         {/* Quick Stats Section */}
-        <div className="bg-gradient-to-r from-slate-50 to-blue-50 py-8">
+        {/* <div className="bg-gradient-to-r from-slate-50 to-blue-50 py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <StatCard icon={<Clock className="w-5 h-5" />} label="İşlem Süresi" value={frontmatter.processingTime} />
@@ -231,7 +231,7 @@ export default async function CountryDetailPage({ params }) {
               <StatCard icon={<Euro className="w-5 h-5" />} label="Başlangıç Ücreti" value={frontmatter.fees?.adult || 'Değişken'} />
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -239,6 +239,10 @@ export default async function CountryDetailPage({ params }) {
             
             {/* Sol: İçerik */}
             <div className="lg:col-span-2 space-y-8">
+              {/* Custom H1 styling for the main title */}
+              <h1 className="text-4xl font-bold text-slate-900 mb-8 pb-4 border-b-2 border-blue-600">
+                {frontmatter.title}
+              </h1>
               {sections.map((section, idx) => (
                 <ContentCard key={idx} section={section} />
               ))}
@@ -246,103 +250,7 @@ export default async function CountryDetailPage({ params }) {
 
             {/* Sağ: Sidebar */}
             <div className="lg:col-span-1">
-              <div className="sticky top-8 space-y-6">
-                
-                {/* Related Countries with Images */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4">
-                    <div className="flex items-center gap-3 text-white">
-                      <MapPin className="w-5 h-5" />
-                      <h3 className="text-lg font-semibold">Diğer Ülkeler</h3>
-                    </div>
-                  </div>
-                  <div className="p-4 space-y-4">
-                    {relatedCountries.map((country) => (
-                      <Link 
-                        key={country.slug}
-                        href={`/ulkeler/${country.slug}`}
-                        className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition-all group border border-gray-100 hover:border-blue-200 hover:shadow-sm"
-                      >
-                        <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden relative">
-                          <Image
-                            src={country.image}
-                            alt={country.name}
-                            fill
-                            className="object-cover"
-                            sizes="64px"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                          <div className="absolute bottom-1 left-1 text-lg">
-                            {country.flag}
-                          </div>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-medium text-gray-900 group-hover:text-blue-600 truncate">
-                            {country.name}
-                          </h4>
-                          <p className="text-xs text-gray-500 truncate mt-1">{country.type}</p>
-                        </div>
-                        <svg className="w-4 h-4 text-gray-400 group-hover:text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Başvuru Bilgileri */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4">
-                    <div className="flex items-center gap-3 text-white">
-                      <CheckCircle className="w-5 h-5" />
-                      <h3 className="text-lg font-semibold">Başvuru Bilgileri</h3>
-                    </div>
-                  </div>
-                  <div className="p-6 space-y-4">
-                    <InfoRow icon={<MapPin className="w-4 h-4" />} label="Ülke" value={frontmatter.country} />
-                    <InfoRow icon={<FileText className="w-4 h-4" />} label="Vize Türü" value={frontmatter.visaType} />
-                    <InfoRow icon={<Clock className="w-4 h-4" />} label="İşlem Süresi" value={frontmatter.processingTime} />
-                    <InfoRow icon={<Calendar className="w-4 h-4" />} label="Geçerlilik" value={frontmatter.validityPeriod} />
-                    <InfoRow icon={<Users className="w-4 h-4" />} label="Giriş Türü" value={frontmatter.entryType} />
-                    <InfoRow icon={<CreditCard className="w-4 h-4" />} label="Yetişkin Ücreti" value={frontmatter.fees?.adult || 'Değişken'} />
-                  </div>
-                </div>
-
-                {/* CTA Section */}
-                <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-xl shadow-lg overflow-hidden">
-                  <div className="p-6 text-center">
-                    <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <Phone className="w-8 h-8" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">Profesyonel Destek</h3>
-                    <p className="text-blue-100 text-sm mb-6 leading-relaxed">
-                      Uzman danışmanlarımız başvuru sürecinizde size yardımcı olmak için hazır
-                    </p>
-                    <a 
-                      href="/#iletisim" 
-                      className="w-full bg-white text-blue-700 font-semibold py-3.5 px-6 rounded-lg hover:bg-blue-50 transition-all hover:shadow-xl flex items-center justify-center gap-2 group"
-                    >
-                      <Phone className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                      <span>İletişime Geçin</span>
-                    </a>
-                  </div>
-                </div>
-
-                {/* Son Güncelleme */}
-                <div className="bg-gray-50 rounded-lg border border-gray-200 p-4 text-center">
-                  <p className="text-xs text-gray-500 mb-1">Son Güncelleme</p>
-                  <p className="text-sm font-semibold text-gray-900">
-                    {frontmatter.lastUpdate 
-                      ? new Date(frontmatter.lastUpdate).toLocaleDateString('tr-TR', { 
-                          day: 'numeric', 
-                          month: 'long', 
-                          year: 'numeric' 
-                        })
-                      : 'Bilgi yok'}
-                  </p>
-                </div>
-
-              </div>
+              <ActiveTableOfContents sections={sections} relatedCountries={relatedCountries} frontmatter={frontmatter} />
             </div>
 
           </div>
@@ -381,6 +289,94 @@ function InfoRow({ icon, label, value }) {
   );
 }
 
+// Parsers
+function parseMarkdownToSections(markdown) {
+  // Remove frontmatter if present
+  let content = markdown;
+  if (content.startsWith('---')) {
+    const frontmatterEnd = content.indexOf('---', 3);
+    if (frontmatterEnd !== -1) {
+      content = content.substring(frontmatterEnd + 3).trim();
+    }
+  }
+  
+  const lines = content.split('\n');
+  const sections = [];
+  let currentSection = null;
+  let firstHeadingProcessed = false;
+
+  lines.forEach((line, index) => {
+    // Remove carriage returns and trim
+    const cleanLine = line.replace(/\r$/, '').trim();
+    
+    // Check for any heading (including H1)
+    const headingMatch = cleanLine.match(/^(#{1,6})\s+(.+)$/);
+    
+    if (headingMatch) {
+      // Skip the first H1 heading as it's the main title
+      if (!firstHeadingProcessed && headingMatch[1].length === 1) {
+        firstHeadingProcessed = true;
+        return;
+      }
+      
+      // Save previous section if it exists
+      if (currentSection) {
+        sections.push(currentSection);
+      }
+      
+      const level = headingMatch[1].length;
+      currentSection = {
+        title: headingMatch[2].trim(),
+        content: [],
+        level: level
+      };
+    } else if (currentSection && cleanLine) {
+      // Add content to current section
+      currentSection.content.push(cleanLine);
+    } else if (currentSection && !cleanLine && currentSection.content.length > 0) {
+      // Add empty line to preserve paragraph breaks
+      currentSection.content.push('');
+    } else if (!currentSection && cleanLine && firstHeadingProcessed) {
+      // Handle content before first heading (after main title)
+      currentSection = {
+        title: null,
+        content: [cleanLine],
+        level: 2
+      };
+    } else if (!currentSection && !cleanLine && sections.length > 0 && sections[sections.length - 1].content.length > 0) {
+      // Add empty line to last section if it exists
+      sections[sections.length - 1].content.push('');
+    }
+  });
+
+  // Don't forget the last section
+  if (currentSection) {
+    sections.push(currentSection);
+  }
+
+  // If no sections were found, create one with all content (excluding main title)
+  if (sections.length === 0 && content.trim()) {
+    // Filter out the first H1 heading
+    const contentLines = lines.filter(line => {
+      const cleanLine = line.replace(/\r$/, '').trim();
+      const headingMatch = cleanLine.match(/^(#{1,6})\s+(.+)$/);
+      // Exclude H1 headings
+      return !headingMatch || headingMatch[1].length > 1;
+    }).filter(line => line.trim() !== '').map(line => line.replace(/\r$/, '').trim());
+    
+    if (contentLines.length > 0) {
+      sections.push({
+        title: null,
+        content: contentLines,
+        level: 2
+      });
+    }
+  }
+
+  return sections;
+}
+
+// Add ContentCard component
 function ContentCard({ section }) {
   // Eğer başlık yoksa (ilk paragraf gibi), basit kart göster
   if (!section.title) {
@@ -399,7 +395,7 @@ function ContentCard({ section }) {
   const headingSize = section.level === 2 ? 'text-2xl md:text-3xl' : section.level === 3 ? 'text-xl md:text-2xl' : section.level === 4 ? 'text-lg md:text-xl' : 'text-base md:text-lg';
   
   return (
-    <div className="modern-card">
+    <div className="modern-card" id={section.title.toLowerCase().replace(/\s+/g, '-')}>
       <div className="modern-card-header">
         <HeadingTag className={`font-bold text-slate-900 flex items-center gap-3 ${headingSize}`}>
           <span className="w-2 h-8 bg-blue-600 rounded-full flex-shrink-0"></span>
@@ -413,74 +409,6 @@ function ContentCard({ section }) {
       </div>
     </div>
   );
-}
-
-// Parsers
-function parseMarkdownToSections(markdown) {
-  // Remove frontmatter if present
-  let content = markdown;
-  if (content.startsWith('---')) {
-    const frontmatterEnd = content.indexOf('---', 3);
-    if (frontmatterEnd !== -1) {
-      content = content.substring(frontmatterEnd + 3).trim();
-    }
-  }
-  
-  const lines = content.split('\n');
-  const sections = [];
-  let currentSection = null;
-
-  lines.forEach((line, index) => {
-    // Remove carriage returns and trim
-    const cleanLine = line.replace(/\r$/, '').trim();
-    const headingMatch = cleanLine.match(/^(#{2,6})\s+(.+)$/);
-    
-    if (headingMatch) {
-      // Save previous section if it exists
-      if (currentSection) {
-        sections.push(currentSection);
-      }
-      
-      const level = headingMatch[1].length;
-      currentSection = {
-        title: headingMatch[2].trim(),
-        content: [],
-        level: level
-      };
-    } else if (currentSection && cleanLine) {
-      // Add content to current section
-      currentSection.content.push(cleanLine);
-    } else if (currentSection && !cleanLine && currentSection.content.length > 0) {
-      // Add empty line to preserve paragraph breaks
-      currentSection.content.push('');
-    } else if (!currentSection && cleanLine) {
-      // Handle content before first heading
-      currentSection = {
-        title: null,
-        content: [cleanLine],
-        level: 2
-      };
-    } else if (!currentSection && !cleanLine && sections.length > 0 && sections[sections.length - 1].content.length > 0) {
-      // Add empty line to last section if it exists
-      sections[sections.length - 1].content.push('');
-    }
-  });
-
-  // Don't forget the last section
-  if (currentSection) {
-    sections.push(currentSection);
-  }
-
-  // If no sections were found, create one with all content
-  if (sections.length === 0 && content.trim()) {
-    sections.push({
-      title: null,
-      content: lines.filter(line => line.trim() !== '').map(line => line.replace(/\r$/, '').trim()),
-      level: 2
-    });
-  }
-
-  return sections;
 }
 
 function renderContent(lines) {
@@ -508,7 +436,7 @@ function renderContent(lines) {
         <ul key={`list-${elements.length}`} className="space-y-3 my-6 pl-0">
           {listItems.map((item, i) => (
             <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed text-base md:text-lg corporate-gray pl-6 relative">
-              <span className="w-2 h-2 bg-blue-600 rounded-full mt-2.5 flex-shrink-0 absolute left-0 top-2.5"></span>
+              <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2.5 flex-shrink-0 absolute left-0 top-2.5"></span>
               <span dangerouslySetInnerHTML={{ __html: item }} />
             </li>
           ))}
