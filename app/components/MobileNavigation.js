@@ -40,7 +40,7 @@ export default function MobileNavigation() {
       <div className="md:hidden relative z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`relative w-10 h-10 rounded-xl transition-all duration-300 ${
+          aria-label="Menüyü aç" className={`relative w-10 h-10 rounded-xl transition-all duration-300 ${
             isOpen 
               ? 'bg-blue-600 text-white shadow-lg' 
               : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 shadow-md border border-gray-200'

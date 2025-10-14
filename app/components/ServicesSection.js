@@ -296,7 +296,7 @@ export default function ServicesSection() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-4 py-2 bg-blue-100 rounded-full mb-6">
             <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
-            <span className="text-blue-600 text-sm font-medium">31 Ülke</span>
+            <span className="text-blue-800 text-sm font-medium">31 Ülke</span>
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
             Vize Hizmetlerimiz
