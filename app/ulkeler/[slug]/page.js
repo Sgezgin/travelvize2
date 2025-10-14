@@ -12,37 +12,37 @@ import ActiveTableOfContents from '../../components/ActiveTableOfContents';
 
 // Country images data
 const countryImages = {
-  'almanya-vizesi': "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'fransa-vizesi': "https://images.unsplash.com/photo-1590767072824-a4424eca7038?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  'hollanda-vizesi': "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'ispanya-vizesi': "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'italya-vizesi': "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'amerika-vizesi': "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'ingiltere-vizesi': "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'kanada-vizesi': "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'isvicre-vizesi': "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'yunanistan-vizesi': "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'avusturya-vizesi': "https://images.unsplash.com/photo-1516550893923-42d28e5677af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'belcika-vizesi': "https://images.unsplash.com/photo-1559564484-e48bf8aeeca1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'portekiz-vizesi': "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'danimarka-vizesi': "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'norvec-vizesi': "https://images.unsplash.com/photo-1601439678777-b2b3c56fa627?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'isvec-vizesi': "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'finlandiya-vizesi': "https://images.unsplash.com/photo-1517721071472-e2d29e33adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'polonya-vizesi': "https://images.unsplash.com/photo-1559628376-f3fe5f782a2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'cek-cumhuriyeti-vizesi': "https://images.unsplash.com/photo-1541849546-216549ae216d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'macaristan-vizesi': "https://images.unsplash.com/photo-1534239697798-120952767c38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'romanya-vizesi': "https://images.unsplash.com/photo-1557958114-7888ea8058fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'bulgaristan-vizesi': "https://images.unsplash.com/photo-1565008576549-57569a49371d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'hirvatistan-vizesi': "https://images.unsplash.com/photo-1555990538-c3c6c7e0b499?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'slovenya-vizesi': "https://images.unsplash.com/photo-1531218150217-54595bc2b934?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'slovakya-vizesi': "https://images.unsplash.com/photo-1581193459975-4e8b970e2e42?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'litvanya-vizesi': "https://images.unsplash.com/photo-1596352914160-2b28f27b2de9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'letonya-vizesi': "https://images.unsplash.com/photo-1580991735757-b8c7c8e5cd5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'estonya-vizesi': "https://images.unsplash.com/photo-1526495124232-a04e1849168c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'malta-vizesi': "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'luksemburg-vizesi': "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  'lihtenstayn-vizesi': "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  'almanya-vizesi': "/almanya.avif",
+  'fransa-vizesi': "/fransa.avif",
+  'hollanda-vizesi': "/hollanda.avif",
+  'ispanya-vizesi': "/ispanya.avif",
+  'italya-vizesi': "/italya.avif",
+  'amerika-vizesi': "/amerika.avif",
+  'ingiltere-vizesi': "/ingiltere.avif",
+  'kanada-vizesi': "/kanada.avif",
+  'isvicre-vizesi': "/isvicre.avif",
+  'yunanistan-vizesi': "/yunanistan.avif",
+  'avusturya-vizesi': "/avusturya.avif",
+  'belcika-vizesi': "/belcika.avif",
+  'portekiz-vizesi': "/portekiz.avif",
+  'danimarka-vizesi': "/danimarka.avif",
+  'norvec-vizesi': "/norvec.avif",
+  'isvec-vizesi': "/isvec.avif",
+  'finlandiya-vizesi': "/finlandia.avif",
+  'polonya-vizesi': "/polonya.avif",
+  'cek-cumhuriyeti-vizesi': "/cek-cumhuriyeti.avif",
+  'macaristan-vizesi': "/macaristan.avif",
+  'romanya-vizesi': "/romanya.avif",
+  'bulgaristan-vizesi': "bulgaristan.avif",
+  'hirvatistan-vizesi': "/hirvatistan.avif",
+  'slovenya-vizesi': "/slovenya.avif",
+  'slovakya-vizesi': "/slovakya.avif",
+  'litvanya-vizesi': "/litvanya.avif",
+  'letonya-vizesi': "/letonya.avif",
+  'estonya-vizesi': "/estonya.avif",
+  'malta-vizesi': "/malta.avif",
+  'luksemburg-vizesi': "/luksemburg.avif",
+  'lihtenstayn-vizesi': "/lihtenstayn.avif",
 };
 
 const countriesDirectory = path.join(process.cwd(), 'app/data/countries');
@@ -82,7 +82,7 @@ export default async function CountryDetailPage({ params }) {
 
   const { frontmatter, content } = countryData;
   const sections = parseMarkdownToSections(content);
-  
+
   // Get country image
   const countryImage = countryImages[slug] || frontmatter.image || "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
 
@@ -112,7 +112,7 @@ export default async function CountryDetailPage({ params }) {
                 />
               </div>
             </div>
-            
+
             {/* Desktop Navigation - Without Icons */}
             <nav className="hidden md:flex items-center space-x-1">
               {[
@@ -121,9 +121,9 @@ export default async function CountryDetailPage({ params }) {
                 { href: '/#hakkimizda', label: 'Hakkımızda' },
                 { href: '/#iletisim', label: 'İletişim' }
               ].map((item, index) => (
-                <a 
+                <a
                   key={item.href}
-                  href={item.href} 
+                  href={item.href}
                   className="group relative px-4 py-2 rounded-xl text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 hover:bg-blue-50/50"
                 >
                   <span className="text-sm group-hover:scale-110 transition-transform duration-300">{item.label}</span>
@@ -131,7 +131,7 @@ export default async function CountryDetailPage({ params }) {
                 </a>
               ))}
             </nav>
-            
+
             {/* Contact Info & CTA */}
             <div className="hidden md:flex items-center space-x-6">
               {/* Phone Number */}
@@ -145,10 +145,10 @@ export default async function CountryDetailPage({ params }) {
                   0212 225 97 00
                 </a>
               </div>
-              
+
               {/* CTA Button */}
-              <a 
-                href="/#iletisim" 
+              <a
+                href="/#iletisim"
                 className="group relative bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 overflow-hidden"
               >
                 <span className="relative z-10 flex items-center space-x-2">
@@ -160,12 +160,12 @@ export default async function CountryDetailPage({ params }) {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
             </div>
-            
+
             {/* Mobile Menu Button */}
             <MobileNavigation />
           </div>
         </div>
-        
+
         {/* Header bottom accent line */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-30"></div>
       </header>
@@ -185,10 +185,10 @@ export default async function CountryDetailPage({ params }) {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-slate-900/40"></div>
           </div>
-          
+
           {/* Back Button */}
           <div className="absolute top-6 left-6">
-            <Link 
+            <Link
               href="/ulkeler"
               className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-all group"
             >
@@ -196,7 +196,7 @@ export default async function CountryDetailPage({ params }) {
               <span className="text-sm font-medium">Ülkelere Dön</span>
             </Link>
           </div>
-          
+
           {/* Country Info Overlay */}
           <div className="absolute bottom-0 left-0 right-0">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
@@ -236,7 +236,7 @@ export default async function CountryDetailPage({ params }) {
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid lg:grid-cols-3 gap-12">
-            
+
             {/* Sol: İçerik */}
             <div className="lg:col-span-2 space-y-8">
               {/* Custom H1 styling for the main title */}
@@ -256,10 +256,10 @@ export default async function CountryDetailPage({ params }) {
           </div>
         </div>
       </main>
-      
+
       {/* Footer - Same as Homepage */}
       <Footer />
-      
+
       {/* WhatsApp Button - Same as Homepage */}
       <WhatsAppButton />
     </div>
@@ -299,7 +299,7 @@ function parseMarkdownToSections(markdown) {
       content = content.substring(frontmatterEnd + 3).trim();
     }
   }
-  
+
   const lines = content.split('\n');
   const sections = [];
   let currentSection = null;
@@ -308,22 +308,22 @@ function parseMarkdownToSections(markdown) {
   lines.forEach((line, index) => {
     // Remove carriage returns and trim
     const cleanLine = line.replace(/\r$/, '').trim();
-    
+
     // Check for any heading (including H1)
     const headingMatch = cleanLine.match(/^(#{1,6})\s+(.+)$/);
-    
+
     if (headingMatch) {
       // Skip the first H1 heading as it's the main title
       if (!firstHeadingProcessed && headingMatch[1].length === 1) {
         firstHeadingProcessed = true;
         return;
       }
-      
+
       // Save previous section if it exists
       if (currentSection) {
         sections.push(currentSection);
       }
-      
+
       const level = headingMatch[1].length;
       currentSection = {
         title: headingMatch[2].trim(),
@@ -357,13 +357,15 @@ function parseMarkdownToSections(markdown) {
   // If no sections were found, create one with all content (excluding main title)
   if (sections.length === 0 && content.trim()) {
     // Filter out the first H1 heading
-    const contentLines = lines.filter(line => {
-      const cleanLine = line.replace(/\r$/, '').trim();
-      const headingMatch = cleanLine.match(/^(#{1,6})\s+(.+)$/);
-      // Exclude H1 headings
-      return !headingMatch || headingMatch[1].length > 1;
-    }).filter(line => line.trim() !== '').map(line => line.replace(/\r$/, '').trim());
-    
+    const contentLines = lines
+      .map(line => line.replace(/\r$/, '').trim())
+      .filter(line => {
+        const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
+        // Exclude H1 headings
+        return !headingMatch || headingMatch[1].length > 1;
+      })
+      .filter(line => line.trim() !== '');
+
     if (contentLines.length > 0) {
       sections.push({
         title: null,
@@ -393,7 +395,7 @@ function ContentCard({ section }) {
 
   const HeadingTag = section.level === 2 ? 'h2' : section.level === 3 ? 'h3' : section.level === 4 ? 'h4' : 'h5';
   const headingSize = section.level === 2 ? 'text-2xl md:text-3xl' : section.level === 3 ? 'text-xl md:text-2xl' : section.level === 4 ? 'text-lg md:text-xl' : 'text-base md:text-lg';
-  
+
   return (
     <div className="modern-card" id={section.title.toLowerCase().replace(/\s+/g, '-')}>
       <div className="modern-card-header">
@@ -413,7 +415,7 @@ function ContentCard({ section }) {
 
 function renderContent(lines) {
   if (!lines || lines.length === 0) return null;
-  
+
   let elements = [];
   let currentParagraph = '';
   let inList = false;
@@ -457,18 +459,41 @@ function renderContent(lines) {
     }
 
     const trimmed = line.trim();
-    
+
+    // Check for H1 headings and skip them (they should be the main title only)
+    const h1Match = trimmed.match(/^(#{1})\s+(.+)$/);
+    if (h1Match) {
+      // Skip H1 headings as they are already displayed as the main title
+      return;
+    }
+
+    // Check for H2 headings (##)
+    const h2Match = trimmed.match(/^(#{2})\s+(.+)$/);
+    if (h2Match) {
+      // Flush any pending content before the heading
+      flushParagraph();
+      flushList();
+
+      elements.push(
+        <h2 key={`h-${elements.length}`} className="text-2xl md:text-3xl font-bold text-slate-900 mt-10 mb-5 flex items-center gap-3 corporate-dark">
+          <span className="w-2 h-8 bg-blue-600 rounded-full flex-shrink-0"></span>
+          <span>{h2Match[2].trim()}</span>
+        </h2>
+      );
+      return;
+    }
+
     // Check for subheadings (###, ####, etc.)
     const subHeadingMatch = trimmed.match(/^(#{3,6})\s+(.+)$/);
     if (subHeadingMatch) {
       // Flush any pending content before the heading
       flushParagraph();
       flushList();
-      
+
       const level = subHeadingMatch[1].length;
       const HeadingTag = level === 3 ? 'h3' : level === 4 ? 'h4' : level === 5 ? 'h5' : 'h6';
       const sizeClass = level === 3 ? 'text-xl md:text-2xl' : level === 4 ? 'text-lg md:text-xl' : 'text-base md:text-lg';
-      
+
       elements.push(
         <HeadingTag key={`h-${elements.length}`} className={`${sizeClass} font-bold text-slate-900 mt-10 mb-5 flex items-center gap-3 corporate-dark`}>
           <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></span>
@@ -477,12 +502,12 @@ function renderContent(lines) {
       );
       return;
     }
-    
+
     // Check for list items
     if (trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
       // Flush paragraph before starting a list
       flushParagraph();
-      
+
       inList = true;
       // Process bold text in list items
       const text = trimmed.replace(/^[-•]\s*/, '').replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-slate-900">$1</strong>');
@@ -493,7 +518,7 @@ function renderContent(lines) {
       if (inList) {
         flushList();
       }
-      
+
       // Add to current paragraph (with space if needed)
       if (currentParagraph) {
         currentParagraph += ' ' + line.trim();
@@ -514,224 +539,224 @@ function renderContent(lines) {
 function getAllCountries() {
   return [
     // Ana Popüler Ülkeler
-    { 
-      name: "Almanya", 
-      flag: "🇩🇪", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Almanya",
+      flag: "🇩🇪",
+      type: "Schengen Vizesi",
       slug: "almanya-vizesi",
-      image: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/almanya.avif"
     },
-    { 
-      name: "Fransa", 
-      flag: "🇫🇷", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Fransa",
+      flag: "🇫🇷",
+      type: "Schengen Vizesi",
       slug: "fransa-vizesi",
-      image: "https://images.unsplash.com/photo-1590767072824-a4424eca7038?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      image: "/fransa.avif"
     },
-    { 
-      name: "Hollanda", 
-      flag: "🇳🇱", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Hollanda",
+      flag: "🇳🇱",
+      type: "Schengen Vizesi",
       slug: "hollanda-vizesi",
-      image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/hollanda.avif"
     },
-    { 
-      name: "İspanya", 
-      flag: "🇪🇸", 
-      type: "Schengen Vizesi", 
+    {
+      name: "İspanya",
+      flag: "🇪🇸",
+      type: "Schengen Vizesi",
       slug: "ispanya-vizesi",
-      image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/ispanya.avif"
     },
-    { 
-      name: "İtalya", 
-      flag: "🇮🇹", 
-      type: "Schengen Vizesi", 
+    {
+      name: "İtalya",
+      flag: "🇮🇹",
+      type: "Schengen Vizesi",
       slug: "italya-vizesi",
-      image: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/italya.avif",
     },
-    { 
-      name: "Amerika", 
-      flag: "🇺🇸", 
-      type: "Turist Vizesi", 
+    {
+      name: "Amerika",
+      flag: "🇺🇸",
+      type: "Turist Vizesi",
       slug: "amerika-vizesi",
-      image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/amerika.avif",
     },
-    { 
-      name: "İngiltere", 
-      flag: "🇬🇧", 
-      type: "UK Vizesi", 
+    {
+      name: "İngiltere",
+      flag: "🇬🇧",
+      type: "UK Vizesi",
       slug: "ingiltere-vizesi",
-      image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/ingiltere.avif",
     },
-    { 
-      name: "Kanada", 
-      flag: "🇨🇦", 
-      type: "eTA & Vize", 
+    {
+      name: "Kanada",
+      flag: "🇨🇦",
+      type: "eTA & Vize",
       slug: "kanada-vizesi",
-      image: "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/kanada.avif",
     },
-    
+
     // Yeni Eklenen Ülkeler
-    { 
-      name: "İsviçre", 
-      flag: "🇨🇭", 
-      type: "Schengen Vizesi", 
+    {
+      name: "İsviçre",
+      flag: "🇨🇭",
+      type: "Schengen Vizesi",
       slug: "isvicre-vizesi",
-      image: "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/isvicre.avif",
     },
-    { 
-      name: "Yunanistan", 
-      flag: "🇬🇷", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Yunanistan",
+      flag: "🇬🇷",
+      type: "Schengen Vizesi",
       slug: "yunanistan-vizesi",
-      image: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/yunanistan.avif",
     },
-    { 
-      name: "Avusturya", 
-      flag: "🇦🇹", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Avusturya",
+      flag: "🇦🇹",
+      type: "Schengen Vizesi",
       slug: "avusturya-vizesi",
-      image: "https://images.unsplash.com/photo-1516550893923-42d28e5677af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/avusturya.avif"
     },
-    { 
-      name: "Belçika", 
-      flag: "🇧🇪", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Belçika",
+      flag: "🇧🇪",
+      type: "Schengen Vizesi",
       slug: "belcika-vizesi",
-      image: "https://images.unsplash.com/photo-1559564484-e48bf8aeeca1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/belcika.avif"
     },
-    { 
-      name: "Portekiz", 
-      flag: "🇵🇹", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Portekiz",
+      flag: "🇵🇹",
+      type: "Schengen Vizesi",
       slug: "portekiz-vizesi",
-      image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/portekiz.avif"
     },
-    { 
-      name: "Danimarka", 
-      flag: "🇩🇰", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Danimarka",
+      flag: "🇩🇰",
+      type: "Schengen Vizesi",
       slug: "danimarka-vizesi",
-      image: "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/danimarka.avif"
     },
-    { 
-      name: "Norveç", 
-      flag: "🇳🇴", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Norveç",
+      flag: "🇳🇴",
+      type: "Schengen Vizesi",
       slug: "norvec-vizesi",
-      image: "https://images.unsplash.com/photo-1601439678777-b2b3c56fa627?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/norvec.avif"
     },
-    { 
-      name: "İsveç", 
-      flag: "🇸🇪", 
-      type: "Schengen Vizesi", 
+    {
+      name: "İsveç",
+      flag: "🇸🇪",
+      type: "Schengen Vizesi",
       slug: "isvec-vizesi",
-      image: "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "isvec.avif"
     },
-    { 
-      name: "Finlandiya", 
-      flag: "🇫🇮", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Finlandiya",
+      flag: "🇫🇮",
+      type: "Schengen Vizesi",
       slug: "finlandiya-vizesi",
-      image: "https://images.unsplash.com/photo-1517721071472-e2d29e33adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/finlandia.avif"
     },
-    { 
-      name: "Polonya", 
-      flag: "🇵🇱", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Polonya",
+      flag: "🇵🇱",
+      type: "Schengen Vizesi",
       slug: "polonya-vizesi",
-      image: "https://images.unsplash.com/photo-1559628376-f3fe5f782a2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/polonya.avif"
     },
-    { 
-      name: "Çek Cumhuriyeti", 
-      flag: "🇨🇿", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Çek Cumhuriyeti",
+      flag: "🇨🇿",
+      type: "Schengen Vizesi",
       slug: "cek-cumhuriyeti-vizesi",
-      image: "https://images.unsplash.com/photo-1541849546-216549ae216d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/cek-cumhuriyeti.avif"
     },
-    { 
-      name: "Macaristan", 
-      flag: "🇭🇺", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Macaristan",
+      flag: "🇭🇺",
+      type: "Schengen Vizesi",
       slug: "macaristan-vizesi",
-      image: "https://images.unsplash.com/photo-1534239697798-120952767c38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/macaristan.avif"
     },
-    { 
-      name: "Romanya", 
-      flag: "🇷🇴", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Romanya",
+      flag: "🇷🇴",
+      type: "Schengen Vizesi",
       slug: "romanya-vizesi",
-      image: "https://images.unsplash.com/photo-1557958114-7888ea8058fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/romanya.avif"
     },
-    { 
-      name: "Bulgaristan", 
-      flag: "🇧🇬", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Bulgaristan",
+      flag: "🇧🇬",
+      type: "Schengen Vizesi",
       slug: "bulgaristan-vizesi",
-      image: "https://images.unsplash.com/photo-1565008576549-57569a49371d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/bulgaristan.avif"
     },
-    { 
-      name: "Hırvatistan", 
-      flag: "🇭🇷", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Hırvatistan",
+      flag: "🇭🇷",
+      type: "Schengen Vizesi",
       slug: "hirvatistan-vizesi",
-      image: "https://images.unsplash.com/photo-1555990538-c3c6c7e0b499?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/hirvatistan.avif"
     },
-    { 
-      name: "Slovenya", 
-      flag: "🇸🇮", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Slovenya",
+      flag: "🇸🇮",
+      type: "Schengen Vizesi",
       slug: "slovenya-vizesi",
-      image: "https://images.unsplash.com/photo-1531218150217-54595bc2b934?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/slovenya.avif"
     },
-    { 
-      name: "Slovakya", 
-      flag: "🇸🇰", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Slovakya",
+      flag: "🇸🇰",
+      type: "Schengen Vizesi",
       slug: "slovakya-vizesi",
-      image: "https://images.unsplash.com/photo-1581193459975-4e8b970e2e42?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/slovakya.avif"
     },
-    { 
-      name: "Litvanya", 
-      flag: "🇱🇹", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Litvanya",
+      flag: "🇱🇹",
+      type: "Schengen Vizesi",
       slug: "litvanya-vizesi",
-      image: "https://images.unsplash.com/photo-1596352914160-2b28f27b2de9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/litvanya.avif"
     },
-    { 
-      name: "Letonya", 
-      flag: "🇱🇻", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Letonya",
+      flag: "🇱🇻",
+      type: "Schengen Vizesi",
       slug: "letonya-vizesi",
-      image: "https://images.unsplash.com/photo-1580991735757-b8c7c8e5cd5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/letonya.avif"
     },
-    { 
-      name: "Estonya", 
-      flag: "🇪🇪", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Estonya",
+      flag: "🇪🇪",
+      type: "Schengen Vizesi",
       slug: "estonya-vizesi",
-      image: "https://images.unsplash.com/photo-1526495124232-a04e1849168c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/estonya.avif"
     },
-    { 
-      name: "Malta", 
-      flag: "🇲🇹", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Malta",
+      flag: "🇲🇹",
+      type: "Schengen Vizesi",
       slug: "malta-vizesi",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/malta.avif"
     },
-    { 
-      name: "Lüksemburg", 
-      flag: "🇱🇺", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Lüksemburg",
+      flag: "🇱🇺",
+      type: "Schengen Vizesi",
       slug: "luksemburg-vizesi",
-      image: "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/luksemburg.avif"
     },
-    { 
-      name: "Lihtenştayn", 
-      flag: "🇱🇮", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Lihtenştayn",
+      flag: "🇱🇮",
+      type: "Schengen Vizesi",
       slug: "lihtenstayn-vizesi",
-      image: "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/lihtenstayn.avif"
     },
   ];
 }

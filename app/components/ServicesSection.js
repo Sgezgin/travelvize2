@@ -4,287 +4,332 @@ import Link from 'next/link';
 export default function ServicesSection() {
   const services = [
     // Ana Popüler Ülkeler
-    { 
-      name: "Almanya", 
-      flag: "🇩🇪", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Almanya",
+      flag: "🇩🇪",
+      type: "Schengen Vizesi",
       slug: "almanya-vizesi",
-      image: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/almanya.avif",
       alt: "Brandenburg Gate in Berlin, Germany",
       order: 1
     },
-    { 
-      name: "Fransa", 
-      flag: "🇫🇷", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Fransa",
+      flag: "🇫🇷",
+      type: "Schengen Vizesi",
       slug: "fransa-vizesi",
-      image: "https://images.unsplash.com/photo-1590767072824-a4424eca7038?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image: "/fransa.avif",
       alt: "Eiffel Tower in Paris, France",
       order: 2
     },
-    { 
-      name: "Hollanda", 
-      flag: "🇳🇱", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Hollanda",
+      flag: "🇳🇱",
+      type: "Schengen Vizesi",
       slug: "hollanda-vizesi",
-      image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/hollanda.avif",
       alt: "Traditional Dutch windmills and tulip fields",
       order: 3
     },
-    { 
-      name: "İspanya", 
-      flag: "🇪🇸", 
-      type: "Schengen Vizesi", 
+    {
+      name: "İspanya",
+      flag: "🇪🇸",
+      type: "Schengen Vizesi",
       slug: "ispanya-vizesi",
-      image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/ispanya.avif",
       alt: "Sagrada Familia in Barcelona, Spain",
       order: 4
     },
-    { 
-      name: "İtalya", 
-      flag: "🇮🇹", 
-      type: "Schengen Vizesi", 
+    {
+      name: "İtalya",
+      flag: "🇮🇹",
+      type: "Schengen Vizesi",
       slug: "italya-vizesi",
-      image: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/italya.avif",
       alt: "Colosseum in Rome, Italy",
       order: 5
     },
-    { 
-      name: "Amerika", 
-      flag: "🇺🇸", 
-      type: "Turist Vizesi", 
+    {
+      name: "Amerika",
+      flag: "🇺🇸",
+      type: "Turist Vizesi",
       slug: "amerika-vizesi",
-      image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/amerika.avif",
       alt: "Statue of Liberty in New York, USA",
       order: 6
     },
-    { 
-      name: "İngiltere", 
-      flag: "🇬🇧", 
-      type: "UK Vizesi", 
+    {
+      name: "İngiltere",
+      flag: "🇬🇧",
+      type: "UK Vizesi",
       slug: "ingiltere-vizesi",
-      image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/ingiltere.avif",
       alt: "Big Ben and London Bridge, United Kingdom",
       order: 7
     },
-    { 
-      name: "Kanada", 
-      flag: "🇨🇦", 
-      type: "eTA & Vize", 
+    {
+      name: "Kanada",
+      flag: "🇨🇦",
+      type: "eTA & Vize",
       slug: "kanada-vizesi",
-      image: "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/kanada.avif",
       alt: "Lake Louise in Canadian Rockies",
       order: 8
     },
-    
+
     // Yeni Eklenen Ülkeler
-    { 
-      name: "İsviçre", 
-      flag: "🇨🇭", 
-      type: "Schengen Vizesi", 
+    {
+      name: "İsviçre",
+      flag: "🇨🇭",
+      type: "Schengen Vizesi",
       slug: "isvicre-vizesi",
-      image: "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/isvicre.avif",
       alt: "Swiss Alps and Mountains",
       order: 9
     },
-    { 
-      name: "Yunanistan", 
-      flag: "🇬🇷", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Yunanistan",
+      flag: "🇬🇷",
+      type: "Schengen Vizesi",
       slug: "yunanistan-vizesi",
-      image: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/yunanistan.avif",
       alt: "Santorini, Greece",
       order: 10
     },
-    { 
-      name: "Avusturya", 
-      flag: "🇦🇹", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Avusturya",
+      flag: "🇦🇹",
+      type: "Schengen Vizesi",
       slug: "avusturya-vizesi",
-      image: "https://images.unsplash.com/photo-1516550893923-42d28e5677af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/avusturya.avif",
       alt: "Vienna, Austria",
       order: 11
     },
-    { 
-      name: "Belçika", 
-      flag: "🇧🇪", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Belçika",
+      flag: "🇧🇪",
+      type: "Schengen Vizesi",
       slug: "belcika-vizesi",
-      image: "https://images.unsplash.com/photo-1559564484-e48bf8aeeca1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/belcika.avif",
       alt: "Brussels, Belgium",
       order: 12
     },
-    { 
-      name: "Portekiz", 
-      flag: "🇵🇹", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Portekiz",
+      flag: "🇵🇹",
+      type: "Schengen Vizesi",
       slug: "portekiz-vizesi",
-      image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/portekiz.avif",
       alt: "Lisbon, Portugal",
       order: 13
     },
-    { 
-      name: "Danimarka", 
-      flag: "🇩🇰", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Danimarka",
+      flag: "🇩🇰",
+      type: "Schengen Vizesi",
       slug: "danimarka-vizesi",
-      image: "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/danimarka.avif",
       alt: "Copenhagen, Denmark",
       order: 14
     },
-    { 
-      name: "Norveç", 
-      flag: "🇳🇴", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Norveç",
+      flag: "🇳🇴",
+      type: "Schengen Vizesi",
       slug: "norvec-vizesi",
-      image: "https://images.unsplash.com/photo-1601439678777-b2b3c56fa627?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/norvec.avif",
       alt: "Norwegian Fjords",
       order: 15
     },
-    { 
-      name: "İsveç", 
-      flag: "🇸🇪", 
-      type: "Schengen Vizesi", 
+    {
+      name: "İsveç",
+      flag: "🇸🇪",
+      type: "Schengen Vizesi",
       slug: "isvec-vizesi",
-      image: "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/isvec.avif",
       alt: "Stockholm, Sweden",
       order: 16
     },
-    { 
-      name: "Finlandiya", 
-      flag: "🇫🇮", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Finlandiya",
+      flag: "🇫🇮",
+      type: "Schengen Vizesi",
       slug: "finlandiya-vizesi",
-      image: "https://images.unsplash.com/photo-1517721071472-e2d29e33adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/finlandia.avif",
       alt: "Helsinki, Finland",
       order: 17
     },
-    { 
-      name: "Polonya", 
-      flag: "🇵🇱", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Polonya",
+      flag: "🇵🇱",
+      type: "Schengen Vizesi",
       slug: "polonya-vizesi",
-      image: "https://images.unsplash.com/photo-1559628376-f3fe5f782a2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/polonya.avif",
       alt: "Krakow, Poland",
       order: 18
     },
-    { 
-      name: "Çek Cumhuriyeti", 
-      flag: "🇨🇿", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Çek Cumhuriyeti",
+      flag: "🇨🇿",
+      type: "Schengen Vizesi",
       slug: "cek-cumhuriyeti-vizesi",
-      image: "https://images.unsplash.com/photo-1541849546-216549ae216d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/cek-cumhuriyeti.avif",
       alt: "Prague, Czech Republic",
       order: 19
     },
-    { 
-      name: "Macaristan", 
-      flag: "🇭🇺", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Macaristan",
+      flag: "🇭🇺",
+      type: "Schengen Vizesi",
       slug: "macaristan-vizesi",
-      image: "https://images.unsplash.com/photo-1534239697798-120952767c38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/macaristan.avif",
       alt: "Budapest, Hungary",
       order: 20
     },
-    { 
-      name: "Romanya", 
-      flag: "🇷🇴", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Romanya",
+      flag: "🇷🇴",
+      type: "Schengen Vizesi",
       slug: "romanya-vizesi",
-      image: "https://images.unsplash.com/photo-1557958114-7888ea8058fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/romanya.avif",
       alt: "Bucharest, Romania",
       order: 21
     },
-    { 
-      name: "Bulgaristan", 
-      flag: "🇧🇬", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Bulgaristan",
+      flag: "🇧🇬",
+      type: "Schengen Vizesi",
       slug: "bulgaristan-vizesi",
-      image: "https://images.unsplash.com/photo-1565008576549-57569a49371d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/bulgaristan.avif",
       alt: "Sofia, Bulgaria",
       order: 22
     },
-    { 
-      name: "Hırvatistan", 
-      flag: "🇭🇷", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Hırvatistan",
+      flag: "🇭🇷",
+      type: "Schengen Vizesi",
       slug: "hirvatistan-vizesi",
-      image: "https://images.unsplash.com/photo-1555990538-c3c6c7e0b499?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/hirvatistan.avif",
       alt: "Dubrovnik, Croatia",
       order: 23
     },
-    { 
-      name: "Slovenya", 
-      flag: "🇸🇮", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Slovenya",
+      flag: "🇸🇮",
+      type: "Schengen Vizesi",
       slug: "slovenya-vizesi",
-      image: "https://images.unsplash.com/photo-1531218150217-54595bc2b934?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/slovenya.avif",
       alt: "Ljubljana, Slovenia",
       order: 24
     },
-    { 
-      name: "Slovakya", 
-      flag: "🇸🇰", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Slovakya",
+      flag: "🇸🇰",
+      type: "Schengen Vizesi",
       slug: "slovakya-vizesi",
-      image: "https://images.unsplash.com/photo-1581193459975-4e8b970e2e42?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/slovakya.avif",
       alt: "Bratislava, Slovakia",
       order: 25
     },
-    { 
-      name: "Litvanya", 
-      flag: "🇱🇹", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Litvanya",
+      flag: "🇱🇹",
+      type: "Schengen Vizesi",
       slug: "litvanya-vizesi",
-      image: "https://images.unsplash.com/photo-1596352914160-2b28f27b2de9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/litvanya.avif",
       alt: "Vilnius, Lithuania",
       order: 26
     },
-    { 
-      name: "Letonya", 
-      flag: "🇱🇻", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Letonya",
+      flag: "🇱🇻",
+      type: "Schengen Vizesi",
       slug: "letonya-vizesi",
-      image: "https://images.unsplash.com/photo-1580991735757-b8c7c8e5cd5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/letonya.avif",
       alt: "Riga, Latvia",
       order: 27
     },
-    { 
-      name: "Estonya", 
-      flag: "🇪🇪", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Estonya",
+      flag: "🇪🇪",
+      type: "Schengen Vizesi",
       slug: "estonya-vizesi",
-      image: "https://images.unsplash.com/photo-1526495124232-a04e1849168c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/estonya.avif",
       alt: "Tallinn, Estonia",
       order: 28
     },
-    { 
-      name: "Malta", 
-      flag: "🇲🇹", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Malta",
+      flag: "🇲🇹",
+      type: "Schengen Vizesi",
       slug: "malta-vizesi",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/malta.avif",
       alt: "Valletta, Malta",
       order: 29
     },
-    { 
-      name: "Lüksemburg", 
-      flag: "🇱🇺", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Lüksemburg",
+      flag: "🇱🇺",
+      type: "Schengen Vizesi",
       slug: "luksemburg-vizesi",
-      image: "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/luksemburg.avif",
       alt: "Luxembourg City",
       order: 30
     },
-    { 
-      name: "Lihtenştayn", 
-      flag: "🇱🇮", 
-      type: "Schengen Vizesi", 
+    {
+      name: "Lihtenştayn",
+      flag: "🇱🇮",
+      type: "Schengen Vizesi",
       slug: "lihtenstayn-vizesi",
-      image: "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/lihtenstayn.avif",
       alt: "Vaduz, Liechtenstein",
       order: 31
     },
+    {
+      name: "Birleşik Arap Emirlikleri (Dubai)",
+      flag: "🇦🇪",
+      type: "Vize",
+      slug: "dubai-vizesi",
+      image: "/dubai.avif",
+      alt: "Dubai, Birleşik Arap Emirlikleri",
+      order: 32
+    },
+    {
+      name: "Cezayir",
+      flag: "🇩🇿",
+      type: "Vize",
+      slug: "cezayir-vizesi",
+      image: "/cezayir.avif",
+      alt: "Cezayir, Cezayir",
+      order: 33
+    },
+    {
+      name: "Çin",
+      flag: "🇨🇳",
+      type: "Vize",
+      slug: "cin-vizesi",
+      image: "/cin.avif",
+      alt: "Pekin, Çin",
+      order: 34
+    },
+    {
+      name: "İrlanda",
+      flag: "🇮🇪",
+      type: "Vize",
+      slug: "irlanda-vizesi",
+      image: "/irlanda.avif",
+      alt: "Dublin, İrlanda",
+      order: 35
+    },
+    {
+      name: "Meksika",
+      flag: "🇲🇽",
+      type: "Vize",
+      slug: "meksika-vizesi",
+      image: "/meksika.avif",
+      alt: "Meksiko, Meksika",
+      order: 36
+    }
   ];
 
   // Sıralamaya göre sırala
@@ -305,11 +350,11 @@ export default function ServicesSection() {
             Dünya genelindeki ülkeler için profesyonel vize danışmanlık hizmetleri sunuyoruz
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {sortedServices.map((service, index) => (
-            <Link 
-              key={index} 
+            <Link
+              key={index}
               href={`/ulkeler/${service.slug}`}
               className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group hover:-translate-y-1"
             >
@@ -330,7 +375,7 @@ export default function ServicesSection() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Card Content */}
               <div className="p-6">
                 <p className="text-gray-600 mb-4 text-sm">{service.type}</p>
@@ -350,8 +395,8 @@ export default function ServicesSection() {
           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 text-white">
             <h3 className="text-2xl font-bold mb-4">Aradığınız Ülkeyi Bulamadınız mı?</h3>
             <p className="text-lg mb-6 opacity-90">Size özel vize danışmanlığı için bizimle iletişime geçin</p>
-            <a 
-              href="#iletisim" 
+            <a
+              href="#iletisim"
               className="inline-block bg-white text-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-300"
             >
               Bize Ulaşın
