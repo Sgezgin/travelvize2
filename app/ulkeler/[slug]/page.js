@@ -54,7 +54,28 @@ function getCountryData(slug) {
     const { data, content } = matter(fileContents);
     return { frontmatter: data, content: content, slug: slug };
   } catch (error) {
-    return null;
+    // Return default data when MD file doesn't exist
+    return {
+      frontmatter: {
+        title: slug.replace('-vizesi', '').replace(/-/g, ' '),
+        country: slug.replace('-vizesi', '').replace(/-/g, ' '),
+        flag: '🏳',
+        visaType: 'Vize Bilgileri',
+        processingTime: 'Güncelleniyor',
+        validityPeriod: 'Güncelleniyor',
+        entryType: 'Güncelleniyor',
+        image: '',
+        fees: {
+          adult: 'Güncelleniyor',
+          child: 'Güncelleniyor',
+          service: 'Güncelleniyor'
+        },
+        lastUpdate: new Date().toISOString().split('T')[0]
+      },
+      content: '',
+      slug: slug,
+      fileNotFound: true
+    };
   }
 }
 
@@ -78,10 +99,14 @@ export async function generateMetadata({ params }) {
 export default async function CountryDetailPage({ params }) {
   const { slug } = await params;
   const countryData = getCountryData(slug);
-  if (!countryData) notFound();
+  // Removed notFound() to handle missing MD files gracefully
 
-  const { frontmatter, content } = countryData;
-  const sections = parseMarkdownToSections(content);
+  const { frontmatter, content, fileNotFound } = countryData;
+  const sections = fileNotFound ? [{
+    title: null,
+    content: ['<div class="corporate-message"><div class="icon">&#128221;</div><div><h3>Bilgiler Güncelleniyor</h3><p>Evraklar hakkında detaylı bilgi ve başvuru süreçleri için iletişim sayfamızdan bize ulaşabilirsiniz. Profesyonel danışman ekibimiz, vize başvurunuzda size yardımcı olmak için hazır.</p><a href="/#iletisim" class="cta-button" style="color:white">İletişime Geçin</a></div></div>'],
+    level: 2
+  }] : parseMarkdownToSections(content);
 
   // Get country image
   const countryImage = countryImages[slug] || frontmatter.image || "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";

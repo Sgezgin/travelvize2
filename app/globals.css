@@ -169,3 +169,60 @@ h1.text-4xl.font-bold.text-slate-900 {
 .modern-card-content {
   padding: 1.5rem;
 }
+
+/* Corporate message styling */
+.corporate-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 1rem;
+  border: 1px solid #bae6fd;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.corporate-message .icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  color: #0ea5e9;
+  background: rgba(2, 132, 199, 0.1);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.corporate-message h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+}
+
+.corporate-message p {
+  color: #334155;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.cta-button {
+  display: inline-block;
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+}
+
+.cta-button:hover {
+  background: linear-gradient(to right, #1d4ed8, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.4);
+}
