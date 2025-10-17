@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    eslint: {
+  eslint: {
     ignoreDuringBuilds: true,
   },
   images: {
@@ -24,6 +24,10 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  experimental: {
+    optimizeCss: false, // 🔧 critters hatasını önler
+    scrollRestoration: true,
   },
 };
 
