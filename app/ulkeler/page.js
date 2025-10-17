@@ -456,7 +456,7 @@ export default function CountriesPage() {
         </div>
 
         {/* Stats Section */}
-        <div className="bg-white shadow-sm">
+        {/* <div className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="flex items-center">
@@ -497,7 +497,7 @@ export default function CountriesPage() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Countries Grid - Corporate Design */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

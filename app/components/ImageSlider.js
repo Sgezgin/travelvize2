@@ -7,7 +7,7 @@ export default function ImageSlider() {
   const slides = [ 
     {
       id: 1,
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&h=1080&fit=crop&crop=center",
+      image: "/slider1.webp",
       title: "Vize Başvurularınızda",
       subtitle: "Vize işlemlerinizi  başlatmak için bizi arayarak kolayca bilgi edinin",
       description: "Vize başvuru sürecinde profesyonel destek almak, başvurunuzun daha hızlı ve kolay bir şekilde sonuçlanmasına yardımcı olabilir.",
@@ -15,7 +15,7 @@ export default function ImageSlider() {
     },  
     {
       id: 2,
-      image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&h=1080&fit=crop&crop=center",
+      image: "/slider2.webp",
       title: "Amerika ve İngiltere",
       subtitle: "Vize işlemlerinizi  başlatmak için bizi arayarak kolayca bilgi edinin",
       description: "En zorlu vize başvurularında yanınızdayız. Deneyimli ekibimizle başarıya ulaşın.",
