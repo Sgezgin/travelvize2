@@ -364,6 +364,7 @@ export default function ServicesSection() {
                   src={service.image}
                   alt={service.alt}
                   fill
+                  priority
                   className="object-cover group-hover:scale-110 transition-transform duration-300"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
