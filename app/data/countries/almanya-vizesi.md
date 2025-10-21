@@ -19,7 +19,7 @@ lastUpdate: "2025-10-14"
 
 ##### ALMANYA VİZESİ
 
-Almanya vizesi başvurusu için doğru ve eksiksiz evrak hazırlamanız çok önemli. Vize türleri arasında turistik, iş, aile veya arkadaş ziyareti, kültürel etkinlikler, sağlık, eğitim gibi seçenekler bulunuyor. Unutmayın ki, 6 aylık süre zarfında en fazla 90 gün kalış hakkınız var.
+Almanya  vizesi başvurusu için doğru ve eksiksiz evrak hazırlamanız çok önemli. Vize türleri arasında turistik, iş, aile veya arkadaş ziyareti, kültürel etkinlikler, sağlık, eğitim gibi seçenekler bulunuyor. Unutmayın ki, 6 aylık süre zarfında en fazla 90 gün kalış hakkınız var.
 
 Başvurunuzun onaylanması için doğru bilgiler vermeniz şart. Eğer Almanya’da akrabanız ya da tanıdığınız biri varsa, belediye onaylı bir davetiye ile başvurmanız süreci kolaylaştırabilir. İlk kez başvuruyorsanız, davetiye size referans sağlar.
 

@@ -27,8 +27,6 @@ export async function POST(request) {
   };
 
 
-  console.log(mailOptions);
-
   try {
     await transporter.sendMail(mailOptions);
     return Response.json({ success: true });

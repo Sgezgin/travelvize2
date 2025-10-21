@@ -20,6 +20,19 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Admin Panel
+
+This project includes a built-in admin panel for managing country visa information:
+
+1. Access the admin panel at `/admin` (e.g., http://localhost:3000/admin)
+2. Login with:
+   - Username: `admin`
+   - Password: `password`
+3. Edit country content using the markdown editor
+4. Save changes to update the content
+
+For detailed instructions, see [ADMIN_GUIDE.md](ADMIN_GUIDE.md).
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
@@ -34,3 +47,5 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+This project is configured with GitHub Actions for automatic deployment to Vercel. See [.github/workflows/deploy.yml](.github/workflows/deploy.yml) for details.
