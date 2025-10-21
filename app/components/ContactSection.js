@@ -67,11 +67,21 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-2 text-lg">Ofis Adresimiz</h4>
-                      <p className="text-gray-600 leading-relaxed">
-                        Ergenekon Mah. Halaskargazi Cad. No: 13/1<br />
-                        Canik Apt. Kat:1<br />
-                        Harbiye/Şişli/İstanbul
-                      </p>
+                      {/* <p className="text-gray-600 leading-relaxed">
+                       Ergenekon Mahallesi <br />
+                        Halaskargazi Caddesi no:13/1<br />
+                        Şişli / İstanbul 
+                      </p> */}
+                      <a 
+  href="https://www.google.com/maps?q=Ergenekon+Mahallesi+Halaskargazi+Caddesi+no:13/1+Şişli+İstanbul" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="text-gray-600 leading-relaxed hover:text-blue-600 transition-colors"
+>
+  Ergenekon Mahallesi <br />
+  Halaskargazi Caddesi no:13/1<br />
+  Şişli / İstanbul
+</a>
                     </div>
                   </div>
                 </div>
