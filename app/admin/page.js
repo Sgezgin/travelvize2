@@ -6,10 +6,12 @@ import Link from 'next/link';
 
 export default function AdminPanel() {
   const [countries, setCountries] = useState([]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [markdownContent, setMarkdownContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
 
   // Check if user is authenticated
@@ -32,6 +34,7 @@ export default function AdminPanel() {
         const response = await fetch('/api/countries');
         const data = await response.json();
         setCountries(data);
+        setFilteredCountries(data);
       } catch (error) {
         console.error('Error fetching countries:', error);
       }
@@ -44,6 +47,19 @@ export default function AdminPanel() {
       fetchCountries();
     }
   }, []);
+
+  // Filter countries based on search term
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      setFilteredCountries(countries);
+    } else {
+      const filtered = countries.filter(country => 
+        country.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        country.slug.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredCountries(filtered);
+    }
+  }, [searchTerm, countries]);
 
   // Load markdown content when a country is selected
   const loadCountryContent = async (slug) => {
@@ -151,26 +167,58 @@ export default function AdminPanel() {
           {/* Left sidebar - Country selection */}
           <div className="bg-white rounded-xl shadow-md p-6 h-fit">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Ülkeler</h2>
-            <div className="space-y-3">
-              {countries.map((country) => (
-                <button
-                  key={country.slug}
-                  onClick={() => {
-                    setSelectedCountry(country.slug);
-                    loadCountryContent(country.slug);
-                  }}
-                  className={`w-full text-left p-3 rounded-lg transition-colors ${
-                    selectedCountry === country.slug
-                      ? 'bg-blue-100 text-blue-700 font-medium'
-                      : 'hover:bg-gray-100'
-                  }`}
+            
+            {/* Search input */}
+            <div className="mb-4">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Ülke ara..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <svg 
+                  className="absolute right-3 top-3.5 h-5 w-5 text-gray-400" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">{country.flag}</span>
-                    <span>{country.name}</span>
-                  </div>
-                </button>
-              ))}
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
+            
+            {/* Country list */}
+            <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
+              {filteredCountries.length > 0 ? (
+                filteredCountries.map((country) => (
+                  <button
+                    key={country.slug}
+                    onClick={() => {
+                      setSelectedCountry(country.slug);
+                      loadCountryContent(country.slug);
+                    }}
+                    className={`w-full text-left p-3 rounded-lg transition-colors ${
+                      selectedCountry === country.slug
+                        ? 'bg-blue-100 text-blue-700 font-medium'
+                        : 'hover:bg-gray-100'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{country.flag}</span>
+                      <span>{country.name}</span>
+                    </div>
+                  </button>
+                ))
+              ) : (
+                <div className="text-center py-4 text-gray-500">
+                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="mt-2">Eşleşen ülke bulunamadı</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -180,7 +228,7 @@ export default function AdminPanel() {
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold text-gray-900">
                   {selectedCountry 
-                    ? countries.find(c => c.slug === selectedCountry)?.name + ' Vize Bilgileri' 
+                    ? filteredCountries.find(c => c.slug === selectedCountry)?.name + ' Vize Bilgileri' 
                     : 'Ülke Seçin'}
                 </h2>
                 <button
