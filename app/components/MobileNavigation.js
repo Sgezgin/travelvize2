@@ -28,10 +28,10 @@ export default function MobileNavigation() {
   }, [isOpen]);
 
   const menuItems = [
-    { href: '#anasayfa', label: 'Anasayfa', icon: '🏠', description: 'Ana sayfa' },
-    { href: '#hizmetler', label: 'Hizmetler', icon: '✈️', description: 'Vize hizmetlerimiz' },
-    { href: '#hakkimizda', label: 'Hakkımızda', icon: '👥', description: 'Firmamız hakkında' },
-    { href: '#iletisim', label: 'İletişim', icon: '📞', description: 'İletişim bilgileri' }
+    { href: '/', label: 'Anasayfa', description: 'Ana sayfa' },
+    { href: '/#hizmetler', label: 'Hizmetler', description: 'Vize hizmetlerimiz' },
+    { href: '/#hakkimizda', label: 'Hakkımızda', description: 'Firmamız hakkında' },
+    { href: '/#iletisim', label: 'İletişim', description: 'İletişim bilgileri' }
   ];
 
   return (
@@ -40,58 +40,52 @@ export default function MobileNavigation() {
       <div className="md:hidden relative z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`relative w-10 h-10 rounded-xl transition-all duration-300 ${
-            isOpen 
-              ? 'bg-blue-600 text-white shadow-lg' 
-              : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 shadow-md border border-gray-200'
-          } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+          aria-label="Menüyü aç" className={`relative w-10 h-10 rounded-xl transition-all duration-300 ${isOpen
+            ? 'bg-blue-600 text-white shadow-lg'
+            : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 shadow-md border border-gray-200'
+            } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
         >
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="relative w-5 h-5">
               {/* Hamburger to X animation */}
-              <span className={`absolute block w-5 h-0.5 bg-current transform transition-all duration-300 ${
-                isOpen ? 'rotate-45 translate-y-0' : '-translate-y-1.5'
-              }`}></span>
-              <span className={`absolute block w-5 h-0.5 bg-current transform transition-all duration-300 ${
-                isOpen ? 'opacity-0' : 'opacity-100'
-              }`}></span>
-              <span className={`absolute block w-5 h-0.5 bg-current transform transition-all duration-300 ${
-                isOpen ? '-rotate-45 translate-y-0' : 'translate-y-1.5'
-              }`}></span>
+              <span className={`absolute block w-5 h-0.5 bg-current transform transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-0' : '-translate-y-1.5'
+                }`}></span>
+              <span className={`absolute block w-5 h-0.5 bg-current transform transition-all duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'
+                }`}></span>
+              <span className={`absolute block w-5 h-0.5 bg-current transform transition-all duration-300 ${isOpen ? '-rotate-45 translate-y-0' : 'translate-y-1.5'
+                }`}></span>
             </div>
           </div>
         </button>
       </div>
 
       {/* Modern Mobile Menu Overlay */}
-      <div className={`fixed inset-0 z-[9999] md:hidden transition-all duration-500 ${
-        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
-      }`}>
+      <div className={`fixed inset-0 z-[9999] md:hidden transition-all duration-500 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+        }`}>
         {/* Backdrop */}
-        <div 
-          className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-500 ${
-            isOpen ? 'opacity-100' : 'opacity-0'
-          }`}
+        <div
+          className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'
+            }`}
           onClick={() => setIsOpen(false)}
         ></div>
-        
+
         {/* Menu Panel */}
-        <div className={`absolute top-0 right-0 w-80 max-w-[85vw] h-full bg-white shadow-2xl transition-all duration-500 transform z-[10000] ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}>
-          {/* Header */}
-          <div className="relative p-6 border-b border-gray-100/50">
-            <div className="flex justify-between items-center">
-              <div className="group">
+        <div className={`absolute top-0 right-0 w-80 max-w-[85vw] h-full bg-white shadow-2xl transition-all duration-500 transform z-[10000] ${isOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}>
+          {/* Header - BURASI DEĞİŞTİ */}
+          <div className="relative h-20 bg-white border-b border-gray-100/50">
+            <div className="flex justify-between items-center h-full px-4">
+              {/* Logo - sola çekildi ve boyut ayarlandı */}
+              <div className="">
                 <Image
-                  src="https://www.travelvize.com/wp-content/uploads/2022/08/LOGOV3.png"
+                  src="/travel.png"
                   alt="TravelVize Logo"
-                  width={140}
-                  height={38}
-                  className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+                  fill                    
+                  className="object-contain transition-transform duration-300 group-hover:scale-105 ml-[-4rem]"
                   priority
                 />
               </div>
+              {/* Close button */}
               <button
                 onClick={() => setIsOpen(false)}
                 className="w-10 h-10 rounded-xl bg-gray-100 text-gray-700 hover:bg-red-50 hover:text-red-600 transition-all duration-300 flex items-center justify-center group"
@@ -101,27 +95,23 @@ export default function MobileNavigation() {
                 </svg>
               </button>
             </div>
-            
+
             {/* Decorative gradient line */}
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-30"></div>
           </div>
-          
-          {/* Navigation Menu */}
-          <nav className="flex-1 px-6 py-8 space-y-2 bg-white">
+
+          {/* Navigation Menu - BURASI DEĞİŞTİ */}
+          <nav className="px-6 py-6 space-y-2 bg-white">
             {menuItems.map((item, index) => (
               <a
                 key={item.href}
                 href={item.href}
-                className={`group block p-4 rounded-2xl transition-all duration-300 hover:bg-blue-50/80 border border-transparent hover:border-blue-100/50 transform hover:-translate-y-0.5 ${
-                  isOpen ? `animate-fadeInUp` : ''
-                }`}
+                className={`group block p-4 rounded-2xl transition-all duration-300 hover:bg-blue-50/80 border border-transparent hover:border-blue-100/50 transform hover:-translate-y-0.5 ${isOpen ? `animate-fadeInUp` : ''
+                  }`}
                 style={{ animationDelay: `${index * 100}ms` }}
                 onClick={() => setIsOpen(false)}
               >
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl flex items-center justify-center group-hover:from-blue-100 group-hover:to-indigo-100 transition-all duration-300 group-hover:scale-110">
-                    <span className="text-xl">{item.icon}</span>
-                  </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                       {item.label}
@@ -137,7 +127,7 @@ export default function MobileNavigation() {
               </a>
             ))}
           </nav>
-          
+
           {/* Contact Section */}
           <div className="p-6 border-t border-gray-100/50 space-y-4 bg-white">
             {/* Phone Number */}
@@ -154,7 +144,7 @@ export default function MobileNavigation() {
                 </a>
               </div>
             </div>
-            
+
             {/* WhatsApp */}
             <div className="flex items-center space-x-3 p-3 bg-green-50/50 rounded-xl border border-green-100/50">
               <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
@@ -167,7 +157,7 @@ export default function MobileNavigation() {
                 </a>
               </div>
             </div>
-            
+
             {/* CTA Button */}
             <a
               href="#iletisim"
@@ -175,7 +165,7 @@ export default function MobileNavigation() {
               onClick={() => setIsOpen(false)}
             >
               <span className="flex items-center justify-center space-x-2">
-                <span>Ücretsiz Danışmanlık Al</span>
+                <span>Sizi Arayalım</span>
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -184,7 +174,7 @@ export default function MobileNavigation() {
           </div>
         </div>
       </div>
-      
+
       {/* Add CSS for animations */}
       <style jsx>{`
         @keyframes fadeInUp {

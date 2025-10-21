@@ -13,38 +13,35 @@ export default function Home() {
       {/* Modern Navigation Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-white/20 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex justify-between items-center h-[4.25rem] pt-[1rem]">
             {/* Logo Section */}
             <div className="flex-shrink-0 group">
               <div className="relative overflow-hidden rounded-xl">
                 <Image
-                  src="https://www.travelvize.com/wp-content/uploads/2022/08/LOGOV3.png"
+                  src="/travel.png"
                   alt="TravelVize Logo"
                   width={160}
                   height={45}
-                  className="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+                  className="h-54 w-auto transition-transform duration-300 group-hover:scale-105"
                   priority
                 />
               </div>
             </div>
             
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - Without Icons */}
             <nav className="hidden md:flex items-center space-x-1">
               {[
-                { href: '#anasayfa', label: 'Anasayfa', icon: '🏠' },
-                { href: '#hizmetler', label: 'Hizmetler', icon: '✈️' },
-                { href: '#hakkimizda', label: 'Hakkımızda', icon: '👥' },
-                { href: '#iletisim', label: 'İletişim', icon: '📞' }
+                { href: '#anasayfa', label: 'Anasayfa' },
+                { href: '#hizmetler', label: 'Hizmetler' },
+                { href: '#hakkimizda', label: 'Hakkımızda' },
+                { href: '#iletisim', label: 'İletişim' }
               ].map((item, index) => (
                 <a 
                   key={item.href}
                   href={item.href} 
                   className="group relative px-4 py-2 rounded-xl text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 hover:bg-blue-50/50"
                 >
-                  <span className="flex items-center space-x-2">
-                    <span className="text-sm group-hover:scale-110 transition-transform duration-300">{item.icon}</span>
-                    <span>{item.label}</span>
-                  </span>
+                  <span className="text-sm group-hover:scale-110 transition-transform duration-300">{item.label}</span>
                   <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
                 </a>
               ))}
@@ -70,7 +67,7 @@ export default function Home() {
                 className="group relative bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 overflow-hidden"
               >
                 <span className="relative z-10 flex items-center space-x-2">
-                  <span>Ücretsiz Danışmanlık</span>
+                  <span>Sizi Arayalım</span>
                   <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>

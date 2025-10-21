@@ -4,28 +4,20 @@ import { useState, useEffect } from "react";
 export default function ImageSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   
-  const slides = [
+  const slides = [ 
     {
       id: 1,
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&h=1080&fit=crop&crop=center",
+      image: "/slider1.webp",
       title: "Vize Başvurularınızda",
-      subtitle: "Profesyonel Destek Alın",
+      subtitle: "Vize işlemlerinizi  başlatmak için bizi arayarak kolayca bilgi edinin",
       description: "Vize başvuru sürecinde profesyonel destek almak, başvurunuzun daha hızlı ve kolay bir şekilde sonuçlanmasına yardımcı olabilir.",
       gradient: "from-blue-600 to-indigo-800"
-    },
+    },  
     {
       id: 2,
-      image: "https://plus.unsplash.com/premium_photo-1726863229625-6e3eda258d03?q=80&w=1154&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      title: "Schengen Vizesi",
-      subtitle: "Avrupa Kapıları Açılıyor",
-      description: "Avrupa'ya seyahatiniz için güvenilir vize danışmanlığı ve profesyonel hizmet desteği.",
-      gradient: "from-purple-600 to-blue-800"
-    },
-    {
-      id: 3,
-      image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&h=1080&fit=crop&crop=center",
+      image: "/slider2.webp",
       title: "Amerika ve İngiltere",
-      subtitle: "Hayalleriniz Gerçek Oluyor",
+      subtitle: "Vize işlemlerinizi  başlatmak için bizi arayarak kolayca bilgi edinin",
       description: "En zorlu vize başvurularında yanınızdayız. Deneyimli ekibimizle başarıya ulaşın.",
       gradient: "from-green-600 to-teal-800"
     }
@@ -91,14 +83,9 @@ export default function ImageSlider() {
                     href="#iletisim" 
                     className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg transition-all duration-300 text-lg font-semibold hover:scale-105 shadow-lg"
                   >
-                    Ücretsiz Danışmanlık Al
+                    Bize Ulaşın
                   </a>
-                  <a 
-                    href="#hakkimizda" 
-                    className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg transition-all duration-300 text-lg font-semibold hover:scale-105"
-                  >
-                    Bizi Tanıyın
-                  </a>
+            
                 </div>
               </div>
             </div>
@@ -109,20 +96,20 @@ export default function ImageSlider() {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+        className="absolute left-4 top-1/2 -translate-y-1/2  bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
         aria-label="Önceki resim"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-10 h-10 flex items-center justify-center" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
       
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
         aria-label="Sonraki resim"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-10 h-10 flex items-center justify-center" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>

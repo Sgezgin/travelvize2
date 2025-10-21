@@ -7,17 +7,17 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <Image
-              src="https://www.travelvize.com/wp-content/uploads/2021/12/logo-white-for-footer-1.png"
+              src="/travel.png"
               alt="TravelVize Logo"
               width={150}
               height={40}
-              className="h-10 w-auto mb-4 filter brightness-0 invert"
+              className="h-54 w-auto mb-4 filter brightness-0 invert"
             />
-            <p className="text-gray-400 mb-4">
+            {/* <p className="text-gray-400 mb-4">
               Profesyonel vize danışmanlık hizmetleri ile dünya kaplarına ulaşın.
-            </p>
+            </p> */}
           </div>
-          
+
           <div>
             <h4 className="font-semibold mb-4">Hizmetler</h4>
             <ul className="space-y-2 text-gray-400">
@@ -27,7 +27,7 @@ export default function Footer() {
               <li><a href="#" className="hover:text-white transition-colors">Kanada Vizesi</a></li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-semibold mb-4">Kurumsal</h4>
             <ul className="space-y-2 text-gray-400">
@@ -36,18 +36,26 @@ export default function Footer() {
               <li><a href="#iletisim" className="hover:text-white transition-colors">İletişim</a></li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-semibold mb-4">İletişim</h4>
             <div className="space-y-2 text-gray-400">
               <p>0212 225 97 00</p>
               <p>info@travelvize.com</p>
-              <p>ERGENEKON MAH. HALASKARGAZİ CAD NO : 13/1 </p>
-              <p>Şişli/İstanbul</p>
+              <a
+                href="https://www.google.com/maps?q=Ergenekon+Mahallesi+Halaskargazi+Caddesi+no:13/1+Şişli+İstanbul"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 leading-relaxed hover:text-blue-600 transition-colors"
+              >
+                Ergenekon Mahallesi <br />
+                Halaskargazi Caddesi no:13/1<br />
+                Şişli / İstanbul
+              </a>
             </div>
           </div>
         </div>
-        
+
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; 2025 TravelVize Danışmanlık. Tüm hakları saklıdır.</p>
         </div>
