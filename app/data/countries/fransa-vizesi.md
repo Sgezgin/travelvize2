@@ -226,6 +226,8 @@ Fransa ticari vize başvurusu için mutlaka ticari davetiye temin edilmelidir. T
 
 #### Fransa vize başvurusu için hangi belgeler gerekli ?
 
+sdasd
+
 - Pasaport (en az 6 ay olmalı, varsa eski pasaportların fotokopisi))
 - 2 adet biyometrik fotoğraf (3,5 x 4,5 ebatlarında biyometrik fotoğraf)
 
