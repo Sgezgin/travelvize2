@@ -17,10 +17,37 @@ export default function ContactSection() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Formunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+        // Formu sıfırla
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          country: '',
+          message: ''
+        });
+      } else {
+        alert('Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+    }
   };
 
   return (
@@ -72,16 +99,16 @@ export default function ContactSection() {
                         Halaskargazi Caddesi no:13/1<br />
                         Şişli / İstanbul 
                       </p> */}
-                      <a 
-  href="https://www.google.com/maps?q=Ergenekon+Mahallesi+Halaskargazi+Caddesi+no:13/1+Şişli+İstanbul" 
-  target="_blank" 
-  rel="noopener noreferrer"
-  className="text-gray-600 leading-relaxed hover:text-blue-600 transition-colors"
->
-  Ergenekon Mahallesi <br />
-  Halaskargazi Caddesi no:13/1<br />
-  Şişli / İstanbul
-</a>
+                      <a
+                        href="https://www.google.com/maps?q=Ergenekon+Mahallesi+Halaskargazi+Caddesi+no:13/1+Şişli+İstanbul"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 leading-relaxed hover:text-blue-600 transition-colors"
+                      >
+                        Ergenekon Mahallesi <br />
+                        Halaskargazi Caddesi no:13/1<br />
+                        Şişli / İstanbul
+                      </a>
                     </div>
                   </div>
                 </div>
