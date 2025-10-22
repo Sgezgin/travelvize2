@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import { promises as fs, existsSync } from 'fs';
 import path from 'path';
 
 const countriesDirectory = path.join(process.cwd(), 'app/data/countries');
@@ -12,7 +12,9 @@ function isAuthenticated(request) {
 // GET /api/countries/[slug] - Get country content
 export async function GET(request, { params }) {
   // Check authentication for admin requests
-  const isAdminRequest = request.headers.get('referer')?.includes('/admin');
+  const referer = request.headers.get('referer') || '';
+  const isAdminRequest = referer.includes('/admin');
+  
   if (isAdminRequest && !isAuthenticated(request)) {
     return new Response(JSON.stringify({ error: 'Yetkisiz erişim' }), {
       status: 401,
@@ -26,7 +28,8 @@ export async function GET(request, { params }) {
     const { slug } = await params;
     const fullPath = path.join(countriesDirectory, `${slug}.md`);
     
-    if (!fs.existsSync(fullPath)) {
+    // Use synchronous existsSync for checking file existence
+    if (!existsSync(fullPath)) {
       return new Response(JSON.stringify({ error: 'Ülke bulunamadı' }), {
         status: 404,
         headers: {
@@ -35,6 +38,7 @@ export async function GET(request, { params }) {
       });
     }
     
+    // Read file content
     const fileContents = await fs.readFile(fullPath, 'utf8');
     
     return new Response(JSON.stringify({ content: fileContents }), {
@@ -44,7 +48,8 @@ export async function GET(request, { params }) {
       },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'İçerik yüklenirken hata oluştu' }), {
+    console.error('Error loading content:', error);
+    return new Response(JSON.stringify({ error: 'İçerik yüklenirken hata oluştu: ' + error.message }), {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
