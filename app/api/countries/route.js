@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import sharedCountries from '../../data/sharedCountries';
 
 const countriesDirectory = path.join(process.cwd(), 'app/data/countries');
 
@@ -9,75 +10,18 @@ function isAuthenticated(request) {
   return cookieHeader && cookieHeader.includes('adminLoggedIn=true');
 }
 
+// Helper function to determine if request is from homepage
+function isPublicRequest(request) {
+  const referer = request.headers.get('referer') || '';
+  // Allow public access for homepage requests
+  return referer.includes('/page') || referer.includes('localhost:') || referer === '';
+}
+
 // GET /api/countries - List all countries
 export async function GET(request) {
-  // Check authentication
-  if (!isAuthenticated(request)) {
-    return new Response(JSON.stringify({ error: 'Yetkisiz erişim' }), {
-      status: 401,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  }
-
   try {
-    const files = fs.readdirSync(countriesDirectory);
-    const countries = files
-      .filter(file => file.endsWith('.md'))
-      .map(file => {
-        const slug = file.replace(/\.md$/, '');
-        // Extract country name from slug
-        const name = slug
-          .replace('-vizesi', '')
-          .replace(/-/g, ' ')
-          .replace(/\b\w/g, char => char.toUpperCase());
-        
-        // Simple flag mapping (you might want to improve this)
-        const flagMap = {
-          'almanya': '🇩🇪',
-          'amerika': '🇺🇸',
-          'fransa': '🇫🇷',
-          'hollanda': '🇳🇱',
-          'ispanya': '🇪🇸',
-          'italya': '🇮🇹',
-          'ingiltere': '🇬🇧',
-          'kanada': '🇨🇦',
-          'isvicre': '🇨🇭',
-          'yunanistan': '🇬🇷',
-          'avusturya': '🇦🇹',
-          'belcika': '🇧🇪',
-          'portekiz': '🇵🇹',
-          'danimarka': '🇩🇰',
-          'norvec': '🇳🇴',
-          'isvec': '🇸🇪',
-          'finlandiya': '🇫🇮',
-          'polonya': '🇵🇱',
-          'cek-cumhuriyeti': '🇨🇿',
-          'macaristan': '🇭🇺',
-          'romanya': '🇷🇴',
-          'bulgaristan': '🇧🇬',
-          'hirvatistan': '🇭🇷',
-          'slovenya': '🇸🇮',
-          'slovakya': '🇸🇰',
-          'litvanya': '🇱🇹',
-          'letonya': '🇱🇻',
-          'estonya': '🇪🇪',
-          'malta': '🇲🇹',
-          'luksemburg': '🇱🇺',
-          'lihtenstayn': '🇱🇮',
-          'cezayir': '🇩🇿',
-          'dubai': '🇦🇪',
-          'hindistan': '🇮🇳'
-        };
-        
-        const countryKey = slug.replace('-vizesi', '');
-        const flag = flagMap[countryKey] || '🏳';
-        
-        return { slug, name, flag };
-      });
-    
-    return new Response(JSON.stringify(countries), {
+    // Return the shared country data
+    return new Response(JSON.stringify(sharedCountries), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',

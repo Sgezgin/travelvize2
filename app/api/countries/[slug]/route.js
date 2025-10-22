@@ -1,4 +1,4 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
 
 const countriesDirectory = path.join(process.cwd(), 'app/data/countries');
@@ -11,8 +11,9 @@ function isAuthenticated(request) {
 
 // GET /api/countries/[slug] - Get country content
 export async function GET(request, { params }) {
-  // Check authentication
-  if (!isAuthenticated(request)) {
+  // Check authentication for admin requests
+  const isAdminRequest = request.headers.get('referer')?.includes('/admin');
+  if (isAdminRequest && !isAuthenticated(request)) {
     return new Response(JSON.stringify({ error: 'Yetkisiz erişim' }), {
       status: 401,
       headers: {
@@ -34,7 +35,7 @@ export async function GET(request, { params }) {
       });
     }
     
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const fileContents = await fs.readFile(fullPath, 'utf8');
     
     return new Response(JSON.stringify({ content: fileContents }), {
       status: 200,
@@ -70,18 +71,8 @@ export async function PUT(request, { params }) {
     
     const fullPath = path.join(countriesDirectory, `${slug}.md`);
     
-    // Check if file exists
-    if (!fs.existsSync(fullPath)) {
-      return new Response(JSON.stringify({ error: 'Ülke bulunamadı' }), {
-        status: 404,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-    }
-    
     // Write the new content
-    fs.writeFileSync(fullPath, content, 'utf8');
+    await fs.writeFile(fullPath, content, 'utf8');
     
     return new Response(JSON.stringify({ message: 'İçerik başarıyla güncellendi' }), {
       status: 200,
@@ -90,7 +81,8 @@ export async function PUT(request, { params }) {
       },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'İçerik güncellenirken hata oluştu' }), {
+    console.error('Error updating content:', error);
+    return new Response(JSON.stringify({ error: 'İçerik güncellenirken hata oluştu: ' + error.message }), {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
