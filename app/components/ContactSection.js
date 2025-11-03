@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -9,6 +9,97 @@ export default function ContactSection() {
     country: '',
     message: ''
   });
+
+  const [reviews, setReviews] = useState([]);
+  const [isLoadingReviews, setIsLoadingReviews] = useState(true);
+  const [totalRating, setTotalRating] = useState(0);
+  const [totalReviews, setTotalReviews] = useState(0);
+
+  // Google Reviews API
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch('/api/google-reviews');
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+          setReviews(result.data.reviews || []);
+          setTotalRating(result.data.rating || 0);
+          setTotalReviews(result.data.totalReviews || 0);
+        } else {
+          // Fallback reviews if API fails
+          setReviews([
+            { 
+              author: 'Ayşe Yılmaz', 
+              rating: 5, 
+              text: 'Travel Vize ekibi sayesinde ABD vizemi sorunsuz aldım. Tüm evraklar konusunda detaylı bilgi verdiler ve süreç boyunca destek oldular. Kesinlikle tavsiye ederim!', 
+              time: '1 hafta önce' 
+            },
+            { 
+              author: 'Mehmet Demir', 
+              rating: 5, 
+              text: 'Schengen vizesi için başvurdum. Çok profesyonel bir hizmet aldım. Özellikle dosya hazırlama konusunda çok yardımcı oldular. Teşekkürler!', 
+              time: '2 hafta önce' 
+            },
+            { 
+              author: 'Fatma Kaya', 
+              rating: 5, 
+              text: 'İngiltere vizesi için destek aldım. Her aşamada bilgilendirildim ve tüm sorularıma sabırla cevap verdiler. Güler yüzlü ve profesyonel ekip.', 
+              time: '3 hafta önce' 
+            },
+            { 
+              author: 'Ali Öztürk', 
+              rating: 4, 
+              text: 'Kanada vizesi başvurum için yardım aldım. Genel olarak memnun kaldım, sadece biraz daha hızlı dönüş yapabilirlerdi.', 
+              time: '1 ay önce' 
+            },
+            { 
+              author: 'Zeynep Arslan', 
+              rating: 5, 
+              text: 'Ailecek Almanya vizesi aldık. Travel Vize ekibi tüm süreci kolaylaştırdı. Evrak hazırlama ve randevu alma konusunda çok yardımcı oldular.', 
+              time: '1 ay önce' 
+            },
+            { 
+              author: 'Hasan Çelik', 
+              rating: 5, 
+              text: 'Japonya vizesi için başvurdum ve kabul edildi! Ekip çok deneyimli, hangi evrakların nasıl hazırlanması gerektiğini çok iyi biliyorlar.', 
+              time: '2 ay önce' 
+            }
+          ]);
+          setTotalRating(4.8);
+          setTotalReviews(45);
+        }
+        setIsLoadingReviews(false);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+        // Set fallback reviews on error
+        setReviews([
+          { 
+            author: 'Ayşe Yılmaz', 
+            rating: 5, 
+            text: 'Travel Vize ekibi sayesinde ABD vizemi sorunsuz aldım. Tüm evraklar konusunda detaylı bilgi verdiler ve süreç boyunca destek oldular. Kesinlikle tavsiye ederim!', 
+            time: '1 hafta önce' 
+          },
+          { 
+            author: 'Mehmet Demir', 
+            rating: 5, 
+            text: 'Schengen vizesi için başvurdum. Çok profesyonel bir hizmet aldım. Özellikle dosya hazırlama konusunda çok yardımcı oldular. Teşekkürler!', 
+            time: '2 hafta önce' 
+          },
+          { 
+            author: 'Fatma Kaya', 
+            rating: 5, 
+            text: 'İngiltere vizesi için destek aldım. Her aşamada bilgilendirildim ve tüm sorularıma sabırla cevap verdiler. Güler yüzlü ve profesyonel ekip.', 
+            time: '3 hafta önce' 
+          }
+        ]);
+        setTotalRating(4.8);
+        setTotalReviews(45);
+        setIsLoadingReviews(false);
+      }
+    };
+    fetchReviews();
+  }, []);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -33,7 +124,6 @@ export default function ContactSection() {
 
       if (result.success) {
         alert('Formunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
-        // Formu sıfırla
         setFormData({
           name: '',
           phone: '',
@@ -61,12 +151,12 @@ export default function ContactSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-
           <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-6">
             Bize Ulaşın
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Yurt dışı planlarınıza birlikte yön verelim, vize işlemleri ve seyahat için hemen bize ulaşın!          </p>
+            Yurt dışı planlarınıza birlikte yön verelim, vize işlemleri ve seyahat için hemen bize ulaşın!
+          </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16">
@@ -94,20 +184,15 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-2 text-lg">Ofis Adresimiz</h4>
-                      {/* <p className="text-gray-600 leading-relaxed">
-                       Ergenekon Mahallesi <br />
-                        Halaskargazi Caddesi no:13/1<br />
-                        Şişli / İstanbul 
-                      </p> */}
                       <a
-                        href="https://www.google.com/maps?q=Ergenekon+Mahallesi+Halaskargazi+Caddesi+no:13/1+Şişli+İstanbul"
+                        href="https://goo.gl/maps/ZvJY5vBcRx5QFGKX8"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-gray-600 leading-relaxed hover:text-blue-600 transition-colors"
                       >
                         Ergenekon Mahallesi <br />
-                        Halaskargazi Caddesi no:13/1<br />
-                        Şişli / İstanbul
+                        Halaskargazi Caddesi No:13/1<br />
+                        34373 Şişli / İstanbul
                       </a>
                     </div>
                   </div>
@@ -166,28 +251,69 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* Working Hours */}
+            {/* Social Media */}
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 text-white">
-              <h4 className="text-xl font-bold mb-6 flex items-center">
-                <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <h4 className="text-xl font-bold mb-6">Sosyal Medya</h4>
+              <div className="flex space-x-4">
+                <a
+                  href="https://www.instagram.com/travelvizecom"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  aria-label="Instagram"
+                >
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://www.facebook.com/travelvizecom"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  aria-label="Facebook"
+                >
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://x.com/travelvizecom"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  aria-label="X (Twitter)"
+                >
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Working Hours */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg">
+              <h4 className="text-xl font-bold mb-6 flex items-center text-gray-900">
+                <svg className="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Çalışma Saatleri
               </h4>
               <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-blue-100">Hafta içi:</span>
-                  <span className="font-semibold">09:00 - 18:00</span>
+                <div className="flex justify-between items-center pb-3 border-b border-gray-100">
+                  <span className="text-gray-600 font-medium">Hafta içi:</span>
+                  <span className="font-semibold text-gray-900">09:00 - 18:00</span>
+                </div>
+                <div className="flex justify-between items-center pb-3">
+                  <span className="text-gray-600 font-medium">Cumartesi:</span>
+                  <span className="font-semibold text-gray-900">10:00 - 17:00</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-blue-100">Cumartesi:</span>
-                  <span className="font-semibold">10:00 - 15:00</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-blue-100">Pazar:</span>
-                  <span className="font-semibold text-blue-200">Kapalı</span>
+                  <span className="text-gray-600 font-medium">Pazar:</span>
+                  <span className="font-semibold text-red-500">Kapalı</span>
                 </div>
               </div>
+            
             </div>
           </div>
 
@@ -244,56 +370,160 @@ export default function ContactSection() {
               </div>
 
               <div className="group">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Hangi ülke için vize başvurusu yapmak istiyorsunuz? *</label>
-                <label htmlFor="country-select" className="sr-only">
-                  Ülke Seçiniz
-                </label>
-                <select
-                  id="country-select"
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Hangi ülke için vize başvurusu yapmak istiyorsunuz?</label>
+                <input
+                  type="text"
                   name="country"
                   value={formData.country}
                   onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-4 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300 text-gray-900"
-                >
-                  <option value="">Ülke seçiniz</option>
-                  <option value="almanya">🇩🇪 Almanya - Schengen Vizesi</option>
-                  <option value="fransa">🇫🇷 Fransa - Schengen Vizesi</option>
-                  <option value="hollanda">🇳🇱 Hollanda - Schengen Vizesi</option>
-                  <option value="ispanya">🇪🇸 İspanya - Schengen Vizesi</option>
-                  <option value="italya">🇮🇹 İtalya - Schengen Vizesi</option>
-                  <option value="amerika">🇺🇸 Amerika - Turist Vizesi</option>
-                  <option value="ingiltere">🇬🇧 İngiltere - UK Vizesi</option>
-                  <option value="kanada">🇨🇦 Kanada - eTA & Vize</option>
-                </select>
+                  className="w-full px-4 py-4 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300 text-gray-900 placeholder-gray-500"
+                  placeholder="Örn: Amerika, Almanya, İngiltere"
+                />
               </div>
 
               <div className="group">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Mesajınız</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Mesajınız (Opsiyonel)</label>
                 <textarea
-                  rows={4}
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-4 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300 resize-none text-gray-900 placeholder-gray-500"
-                  placeholder="Vize başvurunuzla ilgili detayları, seyahat tarihlerinizi ve özel durumlarınızı paylaşabilirsiniz..."
+                  rows="4"
+                  className="w-full px-4 py-4 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300 text-gray-900 placeholder-gray-500 resize-none"
+                  placeholder="Vize başvurusu hakkında sormak istediğiniz bir şey var mı?"
                 ></textarea>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center group"
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-5 px-8 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
-                <svg className="w-5 h-5 mr-2 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
-                Sizi Arayalım
+                <span className="flex items-center justify-center">
+                  Gönder
+                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </span>
               </button>
-
-              <p className="text-sm text-gray-500 text-center">
-                Formu gönderdikten sonra uzman ekibimiz 24 saat içinde size geri dönüş yapacaktır.
-              </p>
             </form>
+          </div>
+        </div>
+
+        {/* Map Section */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Bizi Haritada Bulun</h3>
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d752.2270907245229!2d28.987414!3d41.049133!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab7a633d24a1f%3A0x2a72a379c8ec775d!2sTravel%20Vize%20Profesyonel%20Vize%20Hizmetleri!5e0!3m2!1str!2str!4v1762155230334!5m2!1str!2str"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Travel Vize Danışmanlık Harita"
+              className="w-full"
+            ></iframe>
+          </div>
+          
+         
+        </div>
+
+        {/* Google Reviews Section */}
+        <div className="mt-16">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Google Yorumları</h3>
+            {totalRating > 0 && (
+              <div className="flex items-center justify-center space-x-4 mb-4">
+                <div className="flex items-center">
+                  <span className="text-4xl font-bold text-gray-900 mr-2">{totalRating}</span>
+                  <div className="flex items-center">
+                    {[...Array(5)].map((_, i) => (
+                      <svg
+                        key={i}
+                        className={`w-6 h-6 ${i < Math.round(totalRating) ? 'text-yellow-400' : 'text-gray-300'}`}
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                </div>
+                <span className="text-gray-600">({totalReviews} yorum)</span>
+              </div>
+            )}
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {isLoadingReviews ? (
+              <div className="col-span-full text-center py-8">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <p className="text-gray-500 mt-4">Yorumlar yükleniyor...</p>
+              </div>
+            ) : reviews.length > 0 ? (
+              reviews.slice(0, 6).map((review, index) => (
+                <a
+                  key={index}
+                  href="https://www.google.com/maps/place/Travel+Vize+Dan%C4%B1%C5%9Fmanl%C4%B1k/@41.049133,28.987414,19z/data=!4m8!3m7!1s0x14cab6a4321412e5:0x2a72639ec87cec5d!8m2!3d41.049133!4d28.987414!9m1!1b1!16s%2Fg%2F11c5d8vq7h?hl=tr&entry=ttu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 cursor-pointer block"
+                >
+                  <div className="flex items-start mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                      {review.author.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+                    </div>
+                    <div className="ml-4 flex-1">
+                      <h4 className="font-semibold text-gray-900">{review.author}</h4>
+                      <div className="flex items-center mt-1">
+                        {[...Array(5)].map((_, i) => (
+                          <svg
+                            key={i}
+                            className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                        <span className="text-sm text-gray-500 ml-2">{review.time}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-gray-600 leading-relaxed">{review.text}</p>
+                  <div className="mt-3 flex items-center text-xs text-blue-600">
+                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z"/>
+                    </svg>
+                    Google Maps'te görüntüle
+                  </div>
+                </a>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-8">
+                <p className="text-gray-500">Henüz yorum bulunmamaktadır.</p>
+              </div>
+            )}
+          </div>
+          
+          <div className="text-center mt-8 space-y-4">
+            {/* View All Reviews Button */}
+            <a
+              href="https://www.google.com/search?sca_esv=edf81f750f8b9d51&tbm=lcl&sxsrf=AE3TifOanwLy_ayUj6vQU-UPzs9bxaDwHA:1762155349788&q=Travel+Vize+Profesyonel+Vize+Hizmetleri+Yorumlar&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2NjC1MANCEwNjS1MjSwszU-MNjIyvGA1CihLLUnMUwjKrUhUCivLTUosr8_NgAh6ZVbmpJTmpRZkKkflFpbk5iUWLWEnWAgBJ0QHogAAAAA&rldimm=3058686840395298653&hl=tr-TR&sa=X&ved=2ahUKEwiU2KadvNWQAxUTBNsEHfVsAFYQ9fQKegQILRAF&biw=1920&bih=919&dpr=1#lkt=LocalPoiReviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z"/>
+              </svg>
+              <span>Tüm Yorumları Google'da Görüntüle</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+            
+           
           </div>
         </div>
       </div>

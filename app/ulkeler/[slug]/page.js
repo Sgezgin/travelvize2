@@ -43,6 +43,8 @@ const countryImages = {
   'malta-vizesi': "/malta.avif",
   'luksemburg-vizesi': "/luksemburg.avif",
   'lihtenstayn-vizesi': "/lihtenstayn.avif",
+  'karadag-vizesi': "/karadag.avif",
+
 };
 
 const countriesDirectory = path.join(process.cwd(), 'app/data/countries');

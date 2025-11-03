@@ -281,6 +281,15 @@ export const sharedCountries = [
     image: "/lihtenstayn.avif",
     alt: "Vaduz, Liechtenstein",
     order: 31
+  },
+  {
+    name: "Karadağ",
+    flag: "🇱🇮",
+    type: "Schengen Vizesi",
+    slug: "karadag-vizesi",
+    image: "/karadag.avif",
+    alt: "Karadağ",
+    order: 32
   }
 ];
 

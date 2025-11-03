@@ -7,7 +7,7 @@ import sharedCountries from '../data/sharedCountries';
 
 export default function ServicesSection() {
   const [services, setServices] = useState(sharedCountries);
-  
+
   // Sort services alphabetically
   const sortedServices = [...services].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -416,5 +416,14 @@ const hardcodedServices = [
     image: "/meksika.avif",
     alt: "Meksiko, Meksika",
     order: 36
+  },
+  {
+    name: "Karadag",
+    flag: "Kr",
+    type: "Vize",
+    slug: "karadag-vizesi",
+    image: "/karadag.avif",
+    alt: "Meksiko, Meksika",
+    order: 37
   }
 ];
